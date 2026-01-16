@@ -14,13 +14,16 @@ public class DatabaseConnection
     {
         try
         {
-            //Using properties so I don't hardcore in all the connection information
+            //Using properties so I don't hardcode in all the connection information
             props.load(new FileInputStream("configProperties"));
             final String DBurl = props.getProperty("db.url");
             final String DBuser = props.getProperty("db.user");
             final String DBpassword = props.getProperty("db.password");
 
             connection = DriverManager.getConnection(DBurl, DBuser, DBpassword);
+
+            System.out.println("Database connection established");
+
         }
         catch (SQLException sqlException)
         {
@@ -47,6 +50,5 @@ public class DatabaseConnection
             e.printStackTrace();
         }
     }
-
 }
 
