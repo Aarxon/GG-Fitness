@@ -1,14 +1,16 @@
 public class Membership
 {
-    boolean active = false;
+    boolean status = false;
     String startDate = "";
     String expiryDate = "";
+    String type = "";
 
-    public Membership(boolean active, String startDate, String expiryDate)
+    public Membership(boolean status, String startDate, String expiryDate, String type)
     {
-        this.active = active;
+        this.status = status;
         this.startDate = startDate;
         this.expiryDate = expiryDate;
+        this.type = type;
     }
 
 }

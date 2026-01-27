@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.Scanner;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
@@ -6,60 +7,45 @@ import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame
 {
+    DatabaseOperations dbops = new DatabaseOperations();
+    Scanner input = new Scanner(System.in);
+
     public MainWindow()
     {
-        openGUI();
+        loginScreen();
     }
 
-    public void openGUI()
+    public void loginScreen()
     {
-        JFrame frame = new JFrame();
-        DatabaseConnection db = new DatabaseConnection();
+        int choice = 0;
+        System.out.println("Welcome to GG Fitness");
 
-        frame.setTitle("Gym Management System");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridBagLayout());
+        while(choice == 0)
+        {
+            System.out.println("1. Login");
+            System.out.println("2. Register");
+            System.out.println("3. Exit");
+            choice = input.nextInt();
 
+            switch(choice)
+            {
 
-        JPanel welcomePanel= new JPanel();
-        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
+                case 1:
 
-        // Welcome
-        JLabel welcome = new JLabel("Welcome to the Gym Management System");
-        welcome.setFont(new Font("Arial", Font.BOLD, 40));
-        welcome.setHorizontalAlignment(SwingConstants.CENTER);
+                    dbops.loginUser();
+                    break;
 
+                case 2:
 
-        JButton addBtn = new JButton("Add a new user to the database");
-        JButton findBtn = new JButton("Find a user");
-        JButton updateBtn = new JButton("Update an exisiting user");
-        JButton deleteBtn = new JButton("Delete a user");
+                    dbops.createNewUser();
+                    break;
 
-        welcomePanel.add(Box.createVerticalStrut(350));
-        welcomePanel.add(welcome);
-        welcomePanel.add(addBtn);
-        welcomePanel.add(findBtn);
-        welcomePanel.add(updateBtn);
-        welcomePanel.add(deleteBtn);
+                case 3:
+                    System.out.println("Exiting... ");
+                    System.exit(0);
+            }
 
-
-        frame.add(welcomePanel);
-
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        }
     }
-
-    public void addNewUser()
-    {
-        JLabel firstName = new JLabel("First Name");
-        JLabel lastName = new JLabel("Last Name");
-        JLabel email = new JLabel("Email");
-        JLabel password = new JLabel("Password");
-        JLabel phone = new JLabel("Phone");
-
-    }
-
 
 }

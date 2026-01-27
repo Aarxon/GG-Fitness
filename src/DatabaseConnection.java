@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.sql.PreparedStatement;
 
 public class DatabaseConnection
 {
@@ -16,7 +15,7 @@ public class DatabaseConnection
         startConnection();
     }
 
-    public void startConnection()
+    public Connection startConnection()
     {
         try
         {
@@ -38,15 +37,17 @@ public class DatabaseConnection
         {
             throw new RuntimeException(e);
         }
+        return connection;
     }
 
-    public void closeConnection()
+    public Connection closeConnection()
     {
         try
         {
             if(connection != null)
             {
                 connection.close();
+                System.out.println("Database connection closed");
             }
 
         }
@@ -54,6 +55,8 @@ public class DatabaseConnection
         {
             e.printStackTrace();
         }
+
+        return connection;
     }
 }
 
