@@ -29,7 +29,6 @@ bin/
 .DS_Store
 
 ### Config ###
-lib/
 configProperties
 .idea/
 *.iml
