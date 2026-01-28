@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DatabaseOperations extends DatabaseConnection
 {
     Scanner input = new Scanner(System.in);
-    DatabaseConnection dbc = new DatabaseConnection();
+    DatabaseConnection dbcon = new DatabaseConnection();
 
     Connection connection = null;
     PreparedStatement pstat = null;
@@ -48,7 +48,7 @@ public class DatabaseOperations extends DatabaseConnection
 
         try
         {
-            connection = dbc.startConnection();
+            connection = dbcon.startConnection();
             pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, email, password, phone_number) VALUES (?,?,?,?,?) ");
 
             pstat.setString(1, firstName);
@@ -59,7 +59,7 @@ public class DatabaseOperations extends DatabaseConnection
 
             i = pstat.executeUpdate();
             System.out.println(i + " Record created");
-            connection = dbc.closeConnection();
+            connection = dbcon.closeConnection();
         }
         catch (Exception e)
         {
@@ -68,8 +68,11 @@ public class DatabaseOperations extends DatabaseConnection
 
     }
 
-    public void  loginUser()
+    public void loginUser()
     {
+        connection = dbcon.startConnection();
+        MainWindow mw = new MainWindow();
+
         String email;
         String password;
 
@@ -80,18 +83,30 @@ public class DatabaseOperations extends DatabaseConnection
 
         try
         {
-            String retrieve = "SELECT * FROM customers WHERE Email = '" + email + "' AND Password = '" + password + "'";
+            String retrieve = "SELECT * FROM  Users WHERE email = ? AND password = ?";
 
             pstat = connection.prepareStatement(retrieve);
+            pstat.setString(1, email);
+            pstat.setString(2, password);
+
             resultSet = pstat.executeQuery();
+
+            if(resultSet.next())
+            {
+                System.out.println("Welcome " + " " + resultSet.getString("first_name"));
+                mw.userScreen();
+            }
+            else
+            {
+                System.out.println("Invalid email or password");
+            }
 
         }
         catch(SQLException e)
         {
             e.printStackTrace();
         }
-
-
+        connection = dbcon.closeConnection();
     }
 
     public void update()

@@ -12,7 +12,7 @@ public class DatabaseConnection
 
     public DatabaseConnection()
     {
-        startConnection();
+
     }
 
     public Connection startConnection()

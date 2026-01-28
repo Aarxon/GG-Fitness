@@ -12,8 +12,9 @@ public class MainWindow extends JFrame
 
     public MainWindow()
     {
-        loginScreen();
+
     }
+
 
     public void loginScreen()
     {
@@ -29,23 +30,43 @@ public class MainWindow extends JFrame
 
             switch(choice)
             {
-
                 case 1:
-
                     dbops.loginUser();
                     break;
-
                 case 2:
-
                     dbops.createNewUser();
                     break;
-
                 case 3:
                     System.out.println("Exiting... ");
                     System.exit(0);
+                    break;
             }
 
         }
+    }
+
+    public void userScreen()
+    {
+        int choice = 0;
+
+        while(choice == 0)
+        {
+
+            System.out.println("Welcome to GG Fitness");
+            System.out.println("1. Buy Membership");
+            System.out.println("2. Log out");
+
+            choice = input.nextInt();
+
+            if(choice == 2)
+            {
+                System.out.println("See you again ");
+                loginScreen();
+            }
+        }
+
+
+
     }
 
 }
