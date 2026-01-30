@@ -5,10 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import com.ggfitness.gui.MainWindow;
 import com.ggfitness.model.User;
 import org.apache.commons.validator.routines.EmailValidator;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class UserDBO
 {
@@ -56,26 +56,32 @@ public class UserDBO
         {
             User user = new User(firstName, lastName, email, password, phone);
 
-            try {
+            try
+            {
                 connection = dbcon.startConnection();
                 pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, email, password, phone_number) VALUES (?,?,?,?,?) ");
 
                 pstat.setString(1, firstName);
                 pstat.setString(2, lastName);
                 pstat.setString(3, email);
-                pstat.setString(4, password);
+                pstat.setString(4, passwordHash(password));
                 pstat.setInt(5, phone);
 
                 i = pstat.executeUpdate();
                 System.out.println(i + " Record created");
-                connection = dbcon.closeConnection();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
+            }
+            finally
+            {
+               dbcon.closeConnection();
             }
         }
 
     }
+
 
     public void loginUser()
     {
@@ -116,5 +122,12 @@ public class UserDBO
             e.printStackTrace();
         }
         connection = dbcon.closeConnection();
+    }
+
+    //Method to hash password
+    public String passwordHash(String password)
+    {
+        final String hashPassword =  BCrypt.withDefaults().hashToString(12, password.toCharArray());
+        return hashPassword;
     }
 }

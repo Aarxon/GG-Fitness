@@ -23,6 +23,13 @@
             <artifactId>commons-validator</artifactId>
             <version>1.10.1</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+            <version>0.10.2</version>
+        </dependency>
+
+    </dependencies>
+    
 </project>

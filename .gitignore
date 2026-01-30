@@ -32,3 +32,4 @@ bin/
 configProperties
 .idea/
 *.iml
+/target/
