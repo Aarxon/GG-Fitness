@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class UserForum
 {
+
     public UserForum()
     {
 
@@ -60,6 +61,39 @@ public class UserForum
         return createAccountPanel;
     }
 
+    public JPanel existingAccount()
+    {
+        JPanel logInPanel = new JPanel();
+        logInPanel.setLayout(new BoxLayout(logInPanel, BoxLayout.Y_AXIS));
+
+        logInPanel.add(Box.createVerticalGlue());
+
+        JTextField emailField = new JTextField(20);
+        logInPanel.add(createFieldPanel("Enter Email: ", emailField));
+        logInPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        JPasswordField passwordField = new JPasswordField(20);
+        logInPanel.add(createFieldPanel("Enter Password: ", passwordField));
+
+        JButton logIn = new JButton("Log in");
+        logIn.setLayout(new BoxLayout(logIn, BoxLayout.Y_AXIS));
+        logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton back  = new JButton("Back");
+        back.setLayout(new BoxLayout(back, BoxLayout.Y_AXIS));
+        back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logInPanel.add(logIn);
+        logInPanel.add(back);
+
+        back.addActionListener(e ->
+        {
+
+
+        });
+
+        return logInPanel;
+    }
+
     private JPanel createFieldPanel(String labelText, JTextField textField)
     {
         JPanel panel = new JPanel();
@@ -75,17 +109,5 @@ public class UserForum
         panel.add(textField);
 
         return panel;
-    }
-
-    public JPanel login()
-    {
-        JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
-
-        JLabel email = new JLabel("Enter Email: ");
-        JPasswordField password = new JPasswordField("Enter Password: ");
-
-        return loginPanel;
-
     }
 }

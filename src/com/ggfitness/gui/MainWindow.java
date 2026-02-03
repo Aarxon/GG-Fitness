@@ -62,7 +62,7 @@ public class MainWindow extends JFrame
 
                 if(choice == JOptionPane.YES_OPTION)
                 {
-                    JPanel createPanel = userForum.login();
+                    JPanel createPanel = userForum.existingAccount();
 
                     cardPanel.add(createPanel, "loginUserAccount");
                     cardLayout.show(cardPanel, "loginUserAccount");

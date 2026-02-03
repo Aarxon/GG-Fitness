@@ -65,7 +65,7 @@ public class UserDBO
     }
 
 
-    public void loginUser()
+    public void loginUser(String email, String password)
     {
         connection = dbcon.startConnection();
 
