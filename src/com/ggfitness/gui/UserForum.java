@@ -93,6 +93,7 @@ public class UserForum
             String password = new String(passwordField.getPassword());
 
             user.loginUser(email,password);
+
         });
 
 

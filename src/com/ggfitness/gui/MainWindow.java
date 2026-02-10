@@ -15,12 +15,10 @@ public class MainWindow extends JFrame
     {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-
         cardPanel.add(loginChoicePanel(), "choice");
+
         add(cardPanel);
 
-        JLabel backLabel = new JLabel(new ImageIcon(getClass().getResource("/images/background.png")));
-        add(backLabel, BorderLayout.CENTER);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cardLayout.show(cardPanel, "choice");
@@ -31,6 +29,7 @@ public class MainWindow extends JFrame
     {
         JPanel LoginPanel = new JPanel();
         LoginPanel.setLayout(new BoxLayout(LoginPanel, BoxLayout.Y_AXIS ));
+        LoginPanel.setOpaque(false);
 
         //Added my images for the main login screen
         ImageIcon user = new ImageIcon(getClass().getResource("/images/user.png"));
@@ -52,9 +51,6 @@ public class MainWindow extends JFrame
         LoginPanel.add(userLabel);
         LoginPanel.add(Box.createRigidArea(new Dimension(400, 50)));
         LoginPanel.add(trainerLabel);
-
-        //Add Panel to JFrame
-        this.add(LoginPanel);
 
         //Mouse actions if they click the user icon
         userLabel.addMouseListener(new MouseAdapter()

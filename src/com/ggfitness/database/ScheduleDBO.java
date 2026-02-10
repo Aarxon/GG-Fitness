@@ -89,8 +89,6 @@ public class ScheduleDBO
                 break;
         }
 
-
-
             try {
                 connection = dbcon.startConnection();
                 pstat = connection.prepareStatement("INSERT INTO Schedule (day, start_time, end_time, trainer_name, class_name) VALUES (?,?,?,?,?)");
@@ -103,10 +101,14 @@ public class ScheduleDBO
 
                 i = pstat.executeUpdate();
                 System.out.println(i + " Record created");
-                dbcon.closeConnection();
             } catch (Exception e)
             {
                 e.printStackTrace();
+            }
+            finally
+            {
+                dbcon.closeConnection();
+
             }
 
     }

@@ -65,24 +65,31 @@ public class UserDBO
     }
 
 
-    public void loginUser(String email, String password)
+    public boolean loginUser(String email, String password)
     {
         connection = dbcon.startConnection();
 
         try
         {
-            String retrieve = "SELECT * FROM  Users WHERE email = ? AND password = ?";
+            String retrieve = "SELECT password FROM Users WHERE email = ?";
 
             pstat = connection.prepareStatement(retrieve);
 
             pstat.setString(1, email);
-            pstat.setString(2, passwordHash(password));
-
             resultSet = pstat.executeQuery();
 
             if(resultSet.next())
             {
-                System.out.println("Welcome " + " " + resultSet.getString("first_name"));
+                String passwordHash = resultSet.getString("password");
+
+                if(verifyPassword(password, passwordHash))
+                {
+                    JOptionPane.showMessageDialog(null, "Welcome " + email);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Invalid Password");
+                }
             }
             else
             {
@@ -106,4 +113,12 @@ public class UserDBO
         final String hashPassword =  BCrypt.withDefaults().hashToString(12, password.toCharArray());
         return hashPassword;
     }
+
+
+    public Boolean verifyPassword(String password, String hashPassword)
+    {
+       BCrypt.Result verify =  BCrypt.verifyer().verify(password.toCharArray(), hashPassword);
+       return verify.verified;
+    }
+
 }
