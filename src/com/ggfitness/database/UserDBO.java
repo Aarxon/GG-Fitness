@@ -1,6 +1,5 @@
 package com.ggfitness.database;
 
-import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,7 +64,7 @@ public class UserDBO
     }
 
 
-    public boolean loginUser(String email, String password)
+    public void loginUser(String email, String password)
     {
         connection = dbcon.startConnection();
 

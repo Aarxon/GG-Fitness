@@ -44,6 +44,11 @@ public class UserForum
         createButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         createAccountPanel.add(createButton);
 
+        JButton backButton = new JButton("Back");
+        createButton.setLayout(new BoxLayout(createButton, BoxLayout.Y_AXIS));
+        createButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        createAccountPanel.add(backButton);
+
         createButton.addActionListener(e ->
         {
             UserDBO user = new UserDBO();
@@ -55,6 +60,12 @@ public class UserForum
             String phoneNumber = numberField.getText();
 
             user.createNewUser(firstName,lastName,email,password,phoneNumber);
+        });
+
+        backButton.addActionListener(e ->
+        {
+
+
         });
 
         createAccountPanel.add(Box.createVerticalGlue());
