@@ -1,6 +1,7 @@
 package com.ggfitness.gui;
 
 import com.ggfitness.database.UserDBO;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,45 +75,27 @@ public class UserForum
 
     public JPanel existingAccount()
     {
-        JPanel logInPanel = new JPanel();
-        logInPanel.setLayout(new BoxLayout(logInPanel, BoxLayout.Y_AXIS));
+        JPanel logInPanel = new JPanel(new MigLayout("fill"));
 
-        logInPanel.add(Box.createVerticalGlue());
+        JPanel formPanel = new JPanel(new MigLayout("insets 20"));
 
         JTextField emailField = new JTextField(20);
-        logInPanel.add(createFieldPanel("Enter Email: ", emailField));
-        logInPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        JLabel emailLabel = new JLabel("Enter Email");
+        formPanel.add(emailLabel, "align center, wrap");
+        formPanel.add(emailField, "align center, wrap");
 
         JPasswordField passwordField = new JPasswordField(20);
-        logInPanel.add(createFieldPanel("Enter Password: ", passwordField));
+        JLabel passwordLabel = new JLabel("Enter Password");
+        formPanel.add(passwordLabel, "align center, wrap");
+        formPanel.add(passwordField, "align center, wrap");
 
-        JButton logIn = new JButton("Log in");
-        logIn.setLayout(new BoxLayout(logIn, BoxLayout.Y_AXIS));
-        logIn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton loginButton = new JButton("Login");
+        JButton backButton = new JButton("Back");
 
-        JButton back  = new JButton("Back");
-        back.setLayout(new BoxLayout(back, BoxLayout.Y_AXIS));
-        back.setAlignmentX(Component.CENTER_ALIGNMENT);
-        logInPanel.add(logIn);
-        logInPanel.add(back);
+        formPanel.add(loginButton, "split 2, align center");
+        formPanel.add(backButton, "align center");
 
-        logIn.addActionListener( e ->
-        {
-            UserDBO user = new UserDBO();
-
-            String email = emailField.getText();
-            String password = new String(passwordField.getPassword());
-
-            user.loginUser(email,password);
-
-        });
-
-
-        back.addActionListener(e ->
-        {
-
-
-        });
+        logInPanel.add(formPanel, "push, align center");
 
         return logInPanel;
     }

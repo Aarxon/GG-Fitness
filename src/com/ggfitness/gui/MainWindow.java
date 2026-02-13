@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class MainWindow extends JFrame
 {
@@ -27,9 +28,7 @@ public class MainWindow extends JFrame
 
     private JPanel loginChoicePanel()
     {
-        JPanel LoginPanel = new JPanel();
-        LoginPanel.setLayout(new BoxLayout(LoginPanel, BoxLayout.Y_AXIS ));
-        LoginPanel.setOpaque(false);
+        JPanel LoginPanel = new JPanel(new MigLayout("fill, insets 50, gap 40"));
 
         //Added my images for the main login screen
         ImageIcon user = new ImageIcon(getClass().getResource("/images/user.png"));
@@ -40,17 +39,22 @@ public class MainWindow extends JFrame
         user = new ImageIcon(scaled);
         trainer = new ImageIcon(scaled2);
 
-        //Labels with cursor set to hand cursor when they hover
         JLabel userLabel = new JLabel(user);
         userLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         JLabel trainerLabel = new JLabel(trainer);
         trainerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        JLabel welcometitle = new JLabel("Welcome to GG-Fitness");
+        welcometitle.setFont(new Font("Arial", Font.BOLD, 60));
+        LoginPanel.add(welcometitle, "span, align center");
 
-        LoginPanel.add(Box.createRigidArea(new Dimension(0, 100)));
-        LoginPanel.add(userLabel);
-        LoginPanel.add(Box.createRigidArea(new Dimension(400, 50)));
-        LoginPanel.add(trainerLabel);
+        JLabel title = new JLabel("Choose your Login Type");
+        title.setFont(new Font("Arial", Font.BOLD, 28));
+        LoginPanel.add(title, "span, align center");
+
+
+        LoginPanel.add(userLabel, "push, align center");
+        LoginPanel.add(trainerLabel, "push, align center");
 
         //Mouse actions if they click the user icon
         userLabel.addMouseListener(new MouseAdapter()
@@ -90,7 +94,5 @@ public class MainWindow extends JFrame
 
         return LoginPanel;
     }
-
-
 
 }
