@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.Book;
+
 import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
 import com.formdev.flatlaf.*;
@@ -126,11 +128,29 @@ public class MainWindow extends JFrame
 
     public void showProfileInfo(User user)
     {
-        ProfileInfo profileInfo = new ProfileInfo(user);
+        ProfileInfo profileInfo = new ProfileInfo(user, this);
         JPanel profileInfoPanel = profileInfo.profileHome();
 
         cardPanel.add(profileInfoPanel, "profileHome");
         cardLayout.show(cardPanel, "profileHome");
+    }
+
+    public void showMembershipInfo(User user)
+    {
+        MembershipInfo membershipInfo = new MembershipInfo(user, this);
+        JPanel membershipInfoPanel = membershipInfo.membershipWindow();
+
+        cardPanel.add(membershipInfoPanel, "membershipWindow");
+        cardLayout.show(cardPanel, "membershipWindow");
+    }
+
+    public void showClassesInfo(User user)
+    {
+        BookClassesFourm bookClassesFourm = new BookClassesFourm(user, this);
+        JPanel classesInfoPanel = bookClassesFourm.classesWindow();
+
+        cardPanel.add(classesInfoPanel, "classesWindow");
+        cardLayout.show(cardPanel, "classesWindow");
     }
 
 

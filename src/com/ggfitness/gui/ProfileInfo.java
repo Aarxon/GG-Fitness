@@ -10,11 +10,13 @@ import java.awt.*;
 
 public class ProfileInfo
 {
-    private User user;
+    private final User user;
+    private final MainWindow mainWindow;
 
-    public ProfileInfo(User user)
+    public ProfileInfo(User user, MainWindow mainWindow)
     {
         this.user = user;
+        this.mainWindow = mainWindow;
     }
 
     public JPanel profileHome()
@@ -44,6 +46,7 @@ public class ProfileInfo
         phoneField.setText(user.getPhone());
 
         JButton updateButton = new JButton("Update Details");
+        JButton homeButton = new JButton("Home");
 
         breakDesign(profileDetails);
         labelDesign(firstName);
@@ -71,7 +74,9 @@ public class ProfileInfo
         profilePanel.add(phoneField, "align center,wrap, gapbottom 5");
 
         buttonDesign(updateButton);
+        buttonDesign(homeButton);
         profilePanel.add(updateButton, "align center, wrap");
+        profilePanel.add(homeButton, "align center");
 
 
 
@@ -82,19 +87,29 @@ public class ProfileInfo
 
         updateButton.addActionListener(e ->
         {
-            JOptionPane confirmation = new JOptionPane();
-            int choice = confirmation.showConfirmDialog(mainPanel, "Are you sure you wish to update your pofile info?", "Update Profile", JOptionPane.OK_CANCEL_OPTION);
+            int choice = JOptionPane.showConfirmDialog(mainPanel, "Are you sure you wish to update your pofile info?", "Update Profile", JOptionPane.OK_CANCEL_OPTION);
 
             if(choice == JOptionPane.OK_OPTION)
             {
                 UserDBO userDBO = new UserDBO();
 
+
+
+                userDBO.updateUser(firstNameField.getText(), surnameField.getText(),  emailField.getText(), phoneField.getText(), user.getUser_id());
+                System.out.println(user.getUser_id());
+                System.out.println(user.getFirstName());
+
             }
             else if(choice == JOptionPane.CANCEL_OPTION)
             {
-                JOptionPane cancel = new JOptionPane();
-                cancel.showMessageDialog(mainPanel, "No changes have been made");
+                JOptionPane.showMessageDialog(mainPanel, "No changes have been made");
             }
+        });
+
+        homeButton.addActionListener( e ->
+        {
+            mainWindow.showUserHome(user);
+
         });
 
         return mainPanel;

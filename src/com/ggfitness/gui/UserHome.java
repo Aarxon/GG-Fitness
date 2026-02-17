@@ -54,11 +54,13 @@ public class UserHome
 
         classesButton.addActionListener(e ->
         {
+            mainWindow.showClassesInfo(user);
 
         });
 
         manageButton.addActionListener(e ->
         {
+            mainWindow.showMembershipInfo(user);
 
         });
 

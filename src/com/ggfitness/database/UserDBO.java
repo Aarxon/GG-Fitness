@@ -25,7 +25,7 @@ public class UserDBO
 
     public void createNewUser(String firstName, String lastName, String email, String password, String phoneNumber)
     {
-        int i = 0;
+        int i;
         boolean isAddValid;
 
         isAddValid = emailValidator.isValid(email);
@@ -35,8 +35,6 @@ public class UserDBO
         }
         else
         {
-            User user = new User(firstName, lastName, email, password, phoneNumber);
-
             try
             {
                 connection = dbcon.startConnection();
@@ -85,6 +83,7 @@ public class UserDBO
                 {
                     User user = new User
                             (
+                            resultSet.getInt("user_id"),
                             resultSet.getString("first_name"),
                             resultSet.getString("last_name"),
                             resultSet.getString("email"),
@@ -115,22 +114,43 @@ public class UserDBO
         return null;
     }
 
-    public void updateUser(String firstName, String lastName, String email, String password, String phoneNumber)
+    public void updateUser(String firstName, String lastName, String email, String phoneNumber, int user_id)
     {
         connection = dbcon.startConnection();
+        int i = 0;
 
         try {
-            String update = " ";
 
-            pstat = connection.prepareStatement(update);
+            boolean isAddValid;
+
+            isAddValid = emailValidator.isValid(email);
+            if (!isAddValid)
+            {
+                JOptionPane.showMessageDialog(null, "Invalid Email Address");
+            }
+            else
+            {
+                String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE user_id = ?";
+
+                pstat = connection.prepareStatement(query);
+
+                pstat.setString(1, firstName);
+                pstat.setString(2, lastName);
+                pstat.setString(3, email);
+                pstat.setString(4, phoneNumber);
+                pstat.setInt(5, user_id);
+                i = pstat.executeUpdate();
+            }
         }
         catch (SQLException e)
         {
 
+            e.printStackTrace();
         }
         finally
         {
             dbcon.closeConnection();
+
         }
 
 
@@ -139,8 +159,7 @@ public class UserDBO
     //Method to hash password
     public String passwordHash(String password)
     {
-        final String hashPassword =  BCrypt.withDefaults().hashToString(12, password.toCharArray());
-        return hashPassword;
+        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
 
 
