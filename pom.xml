@@ -42,5 +42,25 @@
             <version>11.3</version>
         </dependency>
 
-    </dependencies>
+  </dependencies>
+
+    <build>
+  <sourceDirectory>src</sourceDirectory>
+  <resources>
+    <resource>
+      <directory>src/images</directory>
+      <targetPath>images</targetPath>
+    </resource>
+  </resources>
+  <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>exec-maven-plugin</artifactId>
+      <configuration>
+        <mainClass>com.ggfitness.GymManagementSystem</mainClass>
+      </configuration>
+    </plugin>
+  </plugins>
+  </build>
+
 </project>
