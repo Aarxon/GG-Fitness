@@ -6,6 +6,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserForum
 {
@@ -16,140 +18,92 @@ public class UserForum
         this.mainWindow = mainWindow;
     }
 
-    public JPanel createAccount()
-    {
 
-        JPanel createAccountPanel = new JPanel(new MigLayout("fill"));
-        JPanel formPanel = new JPanel(new MigLayout("insets 20"));
+       JPanel createAccount() {
+        // Dark background
+        JPanel outer = new JPanel(new MigLayout("fill, align center center"));
+        outer.setBackground(new Color(13, 13, 13));
+
+        // Center card
+        JPanel card = new JPanel(new MigLayout("wrap, align center, insets 50 60 50 60, gap 15"));
+        card.setBackground(new Color(22, 22, 22));
+        card.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        card.setMaximumSize(new Dimension(420, 700));
+
+        // Title
+        JLabel title = new JLabel("GG-FITNESS");
+        title.setFont(new Font("Impact", Font.PLAIN, 52));
+        title.setForeground(new Color(200, 255, 0));
+
+        //Subtitles
+        JLabel subtitle = new JLabel("Register as a member");
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        JLabel alreadyAccount = new JLabel("Already have an account?");
+        alreadyAccount.setForeground(new Color(120, 120, 120));
+        alreadyAccount.setFont(new Font("Arial", Font.PLAIN, 13));
+        alreadyAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+           alreadyAccount.addMouseListener(new MouseAdapter()
+           {
+               public void mouseClicked(MouseEvent e)
+               {
+                   mainWindow.choiceLayout();
+
+               }
+
+           });
 
 
-
-        JLabel firstNameLabel = new JLabel("First Name: ");
+           //Fields
+        subtitle.setForeground(new Color(120, 120, 120));
         JTextField firstNameField = new JTextField(20);
-        formPanel.add(firstNameLabel, "align center, wrap");
-        formPanel.add(firstNameField, "align center, wrap");
-
-        JLabel lastNameLabel = new JLabel("Last Name: ");
+        firstNameField.putClientProperty("JTextField.placeholderText", "First Name");
         JTextField lastNameField = new JTextField(20);
-        formPanel.add(lastNameLabel, "align center, wrap");
-        formPanel.add(lastNameField, "align center, wrap");
-
-        JLabel emailLabel = new JLabel("Email: ");
+        lastNameField.putClientProperty("JTextField.placeholderText", "Last Name");
         JTextField emailField = new JTextField(20);
-        formPanel.add(emailLabel, "align center, wrap");
-        formPanel.add(emailField, "align center, wrap");
-
-        JLabel passwordLabel = new JLabel("Password: ");
-        JPasswordField passwordField = new JPasswordField(20);
-        formPanel.add(passwordLabel, "align center, wrap");
-        formPanel.add(passwordField, "align center, wrap");
-
-        JLabel phoneLabel = new JLabel("Phone: ");
+        emailField.putClientProperty("JTextField.placeholderText", "Email");
+        JPasswordField passField = new JPasswordField(20);
+        passField.putClientProperty("JTextField.placeholderText", "Password");
         JTextField numberField = new JTextField(20);
-        formPanel.add(phoneLabel, "align center, wrap");
-        formPanel.add(numberField, "align center, wrap");
-
-        JButton registerButton = new JButton("Register");
-        JButton backButton = new JButton("Back");
-
-        formPanel.add(registerButton, "align center, split 2");
-        formPanel.add(backButton, "align center, wrap");
-
-        JButton alreadyButton = new JButton("Already have a account?");
-        formPanel.add(alreadyButton, "align center, wrap");
-
-        JButton devlogin = new JButton("DEVVVVVV......");
-                formPanel.add(devlogin, "align center");
+        numberField.putClientProperty("JTextField.placeholderText", "Mobile Number");
 
 
-        createAccountPanel.add(formPanel, "push, align center");
+        // Login button
+        JButton registerBtn = new JButton("Register");
+        registerBtn.setBackground(new Color(200, 255, 0));
+        registerBtn.setForeground(Color.BLACK);
+        registerBtn.setFont(new Font("Arial", Font.BOLD, 15));
+        registerBtn.setFocusPainted(false);
+        registerBtn.setBorderPainted(false);
 
 
+        card.add(title, "align center");
+        card.add(subtitle, "align center, wrap 20");
+        card.add(firstNameField,"growx, wrap");
+        card.add(lastNameField, "growx, wrap");
+        card.add(emailField, "growx, wrap");
+        card.add(passField, "growx, wrap ");
+        card.add(numberField, "growx, wrap ");
+        card.add(registerBtn, "growx, wrap 20, height 45!");
+        card.add(alreadyAccount, "align center, wrap 20");
+        outer.add(card, "push, align center center");
 
-        registerButton.addActionListener(e ->
-        {
-            UserDBO user = new UserDBO();
+           registerBtn.addActionListener(e ->
+           {
+               UserDBO user = new UserDBO();
 
-            String firstName = firstNameField.getText();
-            String lastName = lastNameField.getText();
-            String email = emailField.getText().trim();
-            String password = new String(passwordField.getPassword());
-            String phoneNumber = numberField.getText();
+               String firstName = firstNameField.getText();
+               String lastName = lastNameField.getText();
+               String email = emailField.getText().trim();
+               String password = new String(passField.getPassword());
+               String phoneNumber = numberField.getText();
 
-            user.createNewUser(firstName,lastName,email,password,phoneNumber);
-        });
+               user.createNewUser(firstName,lastName,email,password,phoneNumber);
+           });
 
-        alreadyButton.addActionListener(e ->
-        {
-            mainWindow.loginLayout();
-
-        });
-
-        backButton.addActionListener(e ->
-        {
-            mainWindow.choiceLayout();
-        });
-
-        devlogin.addActionListener( e ->
-        {
-            UserDBO user = new UserDBO();
-
-            User currentUser = user.loginUser("admin@gmail.com", "admin");
-
-                mainWindow.showUserHome(currentUser);
-
-
-        });
-
-        return createAccountPanel;
+        return outer;
     }
 
-    public JPanel existingAccount()
-    {
-        JPanel logInPanel = new JPanel(new MigLayout("fill"));
-
-        JPanel formPanel = new JPanel(new MigLayout("insets 20"));
-
-        JTextField emailField = new JTextField(20);
-        JLabel emailLabel = new JLabel("Enter Email");
-        formPanel.add(emailLabel, "align center, wrap");
-        formPanel.add(emailField, "align center, wrap");
-
-        JPasswordField passwordField = new JPasswordField(20);
-        JLabel passwordLabel = new JLabel("Enter Password");
-        formPanel.add(passwordLabel, "align center, wrap");
-        formPanel.add(passwordField, "align center, wrap");
-
-        JButton loginButton = new JButton("Login");
-        JButton backButton = new JButton("Back");
-
-        formPanel.add(loginButton, "split 2, align center");
-        formPanel.add(backButton, "align center");
-
-        logInPanel.add(formPanel, "push, align center");
-
-        loginButton.addActionListener(e ->
-        {
-
-            UserDBO user = new UserDBO();
-            String email = emailField.getText().trim();
-            String password = passwordField.getText().trim();
-
-            User currentUser = user.loginUser(email, password);
-
-            if(currentUser != null)
-            {
-                mainWindow.showUserHome(currentUser);
-            }
-
-        });
-
-        backButton.addActionListener(e ->
-        {
-            mainWindow.choiceLayout();
-        });
-
-        return logInPanel;
-    }
 
 }

@@ -16,8 +16,15 @@
 
 ## 🛠️ Tech Stack
 
-- **Maven** for dependency management  
-- **Swing** for GUI 
-- **MySQL** for database storage  
-- **JDBC** for database connection  
+- **Java Swing** for GUI
+- **FlatLaf** for modern dark theme
+- **MigLayout** for UI layout
+- **MySQL** for database storage
+- **JDBC** for database connection
+- **Maven** for dependency management
+- **BCrypt** for password hashing
+- 
+## 📸 Screenshots
+
+![Login Screen](images/login.png)
 

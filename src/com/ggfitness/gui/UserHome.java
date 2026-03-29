@@ -2,6 +2,8 @@ package com.ggfitness.gui;
 
 import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,76 +21,117 @@ public class UserHome
 
     public JPanel homeScreen()
     {
-        JPanel topPanel = new JPanel(new MigLayout("fill, insets 10"));
-        JPanel mainPanel = new JPanel(new MigLayout("fill, insets 0"));
+        JPanel navBar = new JPanel(new MigLayout("fill, insets 10"));
+        navBar.setBackground(new Color(22, 22, 22));
+
+        JPanel outer = new JPanel(new MigLayout("fill, insets 0"));
+        outer.setBackground(new Color(13, 13, 13));
 
 
-        JLabel welcomeLabel = new JLabel("Welcome " + user.getFirstName() );
-        JButton profileButton = new JButton("Profile");
-        JButton manageButton = new JButton("Manage Membership");
-        JLabel nameLabel = new JLabel("Welcome" + ", " + user.getFirstName());
-        JLabel ggLabel = new JLabel("GG Fitness");
-        JButton classesButton = new JButton("Book a Class");
+        //Classes
+        JPanel classesCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
+        classesCard.setBackground(new Color(22, 22, 22));
+        classesCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        classesCard.setPreferredSize(new Dimension(280, 320));
 
-        JButton logoutButton = new JButton("Logout");
+        JLabel classesLabel = new JLabel("Book a Class");
+        classesLabel.setFont(new Font("Impact", Font.PLAIN, 24));
+        classesLabel.setForeground(Color.WHITE);
+        //Classes
+
+        //Memberships
+        JPanel membershipCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
+        membershipCard.setBackground(new Color(22, 22, 22));
+        membershipCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        membershipCard.setPreferredSize(new Dimension(280, 320));
+
+        JLabel membershipLabel = new JLabel("Membership");
+        membershipLabel.setFont(new Font("Impact", Font.PLAIN, 24));
+        membershipLabel.setForeground(Color.WHITE);
+        //Memberships
+
+        //News
+        JPanel newsCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
+        newsCard.setBackground(new Color(22, 22, 22));
+        newsCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        newsCard.setPreferredSize(new Dimension(280, 320));
+
+        JLabel newsLabel = new JLabel("News");
+        newsLabel.setFont(new Font("Impact", Font.PLAIN, 24));
+        newsLabel.setForeground(Color.WHITE);
+        //News
+
+        JLabel logoutLabel = new JLabel("Logout");
+        logoutLabel.setForeground(new Color(120, 120, 120));
+        logoutLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-        buttonDesign(classesButton);
-        buttonDesign(manageButton);
-        buttonDesign(profileButton);
-        buttonDesign(logoutButton);
-        nameLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        JLabel nameLabel = new JLabel(user.getFirstName());
+        nameLabel.setFont(new Font("Impact", Font.PLAIN, 22));
+        nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-        mainPanel.add(classesButton, "align center");
-        mainPanel.add(manageButton, "align center");
-        mainPanel.add(profileButton, "align center");
-        topPanel.setBackground(new Color(70, 80, 150));
-        mainPanel.setBackground(Color.WHITE);
+        JLabel gglabel = new JLabel("GG-Fitness");
+        gglabel.setFont(new Font("Impact", Font.PLAIN, 30));
+        gglabel.setForeground(new Color(200, 255, 0));
 
-        mainPanel.add(topPanel, "dock north, growx, h 80!");
+        JLabel avatar = new JLabel("●");
+        avatar.setFont(new Font("Arial", Font.PLAIN, 40));
+        avatar.setForeground(new Color(0, 0, 0));
 
-        topPanel.add(logoutButton, "align left, h 60!");
-        topPanel.add(nameLabel, "align right, wrap, h 60!");
-
-        profileButton.addActionListener(e ->
-        {
-            mainWindow.showProfileInfo(user);
-
+            logoutLabel.addMouseListener(new MouseAdapter()
+            {
+            public void mouseClicked(MouseEvent e)
+            {
+                mainWindow.choiceLayout();
+            }
+            public void mouseEntered(MouseEvent e)
+            {
+                logoutLabel.setForeground(new Color(200, 255, 0));
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                logoutLabel.setForeground(new Color(120, 120, 120));
+            }
         });
 
-        logoutButton.addActionListener(e ->
-        {
-            mainWindow.choiceLayout();
+            nameLabel.addMouseListener(new MouseAdapter()
+            {
+            public void mouseClicked(MouseEvent e)
+            {
+                mainWindow.showProfileInfo(user);
+            }
+            public void mouseEntered(MouseEvent e)
+            {
+                nameLabel.setForeground(new Color(200, 255, 0));
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                nameLabel.setForeground(new Color(120, 120, 120));
+            }
         });
 
-        classesButton.addActionListener(e ->
-        {
-            mainWindow.showClassesInfo(user);
-
-        });
-
-        manageButton.addActionListener(e ->
-        {
-            mainWindow.showMembershipInfo(user);
-
-        });
 
 
-        return mainPanel;
+        //mig add section
+        outer.add(navBar, "dock north, growx, h 80!");
+        outer.add(membershipCard, "align right");
+        outer.add(classesCard, "align center");
+        outer.add(newsCard, "align left");
+
+        classesCard.add(classesLabel, "align center");
+        membershipCard.add(membershipLabel, "align center");
+        newsCard.add(newsLabel, "align center");
+
+
+
+        navBar.add(logoutLabel, "w 200!, align left, h 40!");
+        navBar.add(gglabel, "pushx, align center");
+        navBar.add(nameLabel, "align right, h 40!");
+        navBar.add(avatar, "align right, h 45!");
+
+
+        return outer;
     }
 
-
-
-    private JButton buttonDesign(JButton button)
-    {
-        button.setFont(new Font("Arial", Font.BOLD, 18));
-        button.setBackground(new Color(102, 126, 234));
-        button.setForeground(Color.BLACK);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(250, 100));
-
-        return button;
-    }
 }

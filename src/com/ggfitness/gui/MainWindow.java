@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.Book;
 
+import com.ggfitness.database.UserDBO;
 import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
 import com.formdev.flatlaf.*;
@@ -21,7 +22,6 @@ public class MainWindow extends JFrame
 
     public MainWindow()
     {
-
         try
         {
             UIManager.setLookAndFeel(new FlatDarkLaf());
@@ -43,63 +43,126 @@ public class MainWindow extends JFrame
 
     private JPanel loginChoicePanel()
     {
-        JPanel LoginPanel = new JPanel(new MigLayout("fill, insets 50, gap 30"));
-        LoginPanel.setBackground(Color.GRAY);
+        // Dark background
+        JPanel outer = new JPanel(new MigLayout("fill, flowy, align center center"));
+        outer.setBackground(new Color(13, 13, 13));
+        //temp dev button
+        JButton devBtn = new JButton("Admin Login");
+        devBtn.setBackground(new Color(255, 0, 0));
 
-        //Added my images for the main login screen
-        ImageIcon user = new ImageIcon(getClass().getResource("/images/user.png"));
-        ImageIcon trainer = new ImageIcon(getClass().getResource("/images/trainer.png"));
-        Image scaled = user.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
-        Image scaled2 = trainer.getImage().getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+        // Center card
+        JPanel card = new JPanel(new MigLayout("wrap, align center, insets 50 60 50 60, gap 15"));
+        card.setBackground(new Color(22, 22, 22));
+        card.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        card.setMaximumSize(new Dimension(420, 700));
 
-        user = new ImageIcon(scaled);
-        trainer = new ImageIcon(scaled2);
+        // Title
+        JLabel title = new JLabel("GG-FITNESS");
+        title.setFont(new Font("Impact", Font.PLAIN, 52));
+        title.setForeground(new Color(200, 255, 0));
 
-        JLabel userLabel = new JLabel(user);
-        userLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        JLabel trainerLabel = new JLabel(trainer);
-        trainerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JLabel subtitle = new JLabel("Member Login");
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 16));
+        subtitle.setForeground(new Color(120, 120, 120));
 
-        JLabel welcometitle = new JLabel("Welcome to GG-Fitness");
-        welcometitle.setFont(new Font("Arial", Font.BOLD, 60));
-        LoginPanel.add(welcometitle, "span, align center");
+        // Fields
+        JTextField emailField = new JTextField(20);
+        emailField.putClientProperty("JTextField.placeholderText", "Username");
 
-        JLabel title = new JLabel("Choose your Login Type");
-        title.setFont(new Font("Arial", Font.BOLD, 28));
-        LoginPanel.add(title, "span, align center");
+        JPasswordField passField = new JPasswordField(20);
+        passField.putClientProperty("JTextField.placeholderText", "Password");
 
-        LoginPanel.add(userLabel, "push, align center");
-        LoginPanel.add(trainerLabel, "push, align center");
+        // Login button
+        JButton loginBtn = new JButton("LOGIN");
+        loginBtn.setBackground(new Color(200, 255, 0));
+        loginBtn.setForeground(Color.BLACK);
+        loginBtn.setFont(new Font("Arial", Font.BOLD, 15));
+        loginBtn.setFocusPainted(false);
+        loginBtn.setBorderPainted(false);
 
-        //Mouse actions if they click the user icon
-        userLabel.addMouseListener(new MouseAdapter()
+        // Trainer toggle link
+        JLabel trainerToggle = new JLabel("Login as Trainer instead");
+        trainerToggle.setForeground(new Color(120, 120, 120));
+        trainerToggle.setFont(new Font("Arial", Font.PLAIN, 13));
+        trainerToggle.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        trainerToggle.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent e)
             {
-                    JPanel createPanel = userForum.createAccount();
-
-                    cardPanel.add(createPanel, "createUserAccount");
-                    cardLayout.show(cardPanel, "createUserAccount");
-            }
-        });
-
-
-        //Mouse actions if they click the trainer icon
-        trainerLabel.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent e)
-            {
-
-                JPanel trainerPael = trainerFourm.trainerLogin();
-
-                cardPanel.add(trainerPael, "trainerLogin");
+                JPanel trainerPanel = trainerFourm.trainerLogin();
+                cardPanel.add(trainerPanel, "trainerLogin");
                 cardLayout.show(cardPanel, "trainerLogin");
-
+            }
+            public void mouseEntered(MouseEvent e)
+            {
+                trainerToggle.setForeground(new Color(200, 255, 0));
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                trainerToggle.setForeground(new Color(120, 120, 120));
             }
         });
 
+        // Register button
+        JLabel register = new JLabel("Create an account");
+        register.setForeground(new Color(120, 120, 120));
+        register.setFont(new Font("Arial", Font.PLAIN, 13));
+        register.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        register.addMouseListener(new MouseAdapter() {
 
-        return LoginPanel;
+            public void mouseClicked(MouseEvent e)
+            {
+                JPanel register = userForum.createAccount();
+                cardPanel.add(register, "createAccount");
+                cardLayout.show(cardPanel, "createAccount");
+            }
+            public void mouseEntered(MouseEvent e)
+            {
+                register.setForeground(new Color(200, 255, 0));
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                register.setForeground(new Color(120, 120, 120));
+            }
+        });
+
+        card.add(title, "align center");
+        card.add(subtitle, "align center, wrap 20");
+        card.add(emailField, "growx, wrap");
+        card.add(passField, "growx, wrap 10");
+        card.add(loginBtn, "growx, wrap 20, height 45!");
+        card.add(trainerToggle, "align center");
+        card.add(register, "align center");
+        outer.add(card, "push, align center center");
+        outer.add(devBtn, "align center");
+
+        loginBtn.addActionListener(e ->
+        {
+            UserDBO user = new UserDBO();
+            String email = emailField.getText().trim();
+            String password = passField.getText().trim();
+
+            User currentUser = user.loginUser(email, password);
+
+
+            if(currentUser != null)
+            {
+                showUserHome(currentUser);
+            }
+        });
+
+        devBtn.addActionListener( e ->
+        {
+            UserDBO user = new UserDBO();
+
+            User currentUser = user.loginUser("admin@gmail.com", "admin");
+            showUserHome(currentUser);
+
+        });
+
+        return outer;
+
     }
 
 
@@ -110,24 +173,24 @@ public class MainWindow extends JFrame
         cardLayout.show(cardPanel, "choice");
         cardPanel.revalidate();
         cardPanel.repaint();
-    }
-    protected void loginLayout()
-    {
-        JPanel createPanel = userForum.existingAccount();
-
-        cardPanel.add(createPanel, "createExistingAccount");
-        cardLayout.show(cardPanel, "createExistingAccount");
+        repaint();
 
     }
+
 
     public void showUserHome(User user)
     {
         UserHome userHome = new UserHome(user, this);
         JPanel userHomePanel = userHome.homeScreen();
 
+        cardPanel.removeAll();
         cardPanel.add(userHomePanel, "userHome");
         cardLayout.show(cardPanel, "userHome");
+        cardPanel.revalidate();
+        cardPanel.repaint();
+        repaint();
     }
+
 
     public void showProfileInfo(User user)
     {
