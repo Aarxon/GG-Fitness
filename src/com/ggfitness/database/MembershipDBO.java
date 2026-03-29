@@ -29,7 +29,7 @@ public class MembershipDBO
             try
             {
                 connection = dbcon.startConnection();
-                pstat = connection.prepareStatement("INSERT INTO Membership(status, startDate, expiryData, type) VALUES (?,?,?,?,?) ");
+                pstat = connection.prepareStatement("INSERT INTO Membership(status, startDate, expiryData, type) VALUES (?,?,?,?) ");
 
                 pstat.setBoolean(1, status);
                 pstat.setString(2, startDate);

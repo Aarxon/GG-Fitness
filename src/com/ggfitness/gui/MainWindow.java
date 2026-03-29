@@ -24,7 +24,7 @@ public class MainWindow extends JFrame
 
         try
         {
-            UIManager.setLookAndFeel(new FlatLightLaf());
+            UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -105,9 +105,12 @@ public class MainWindow extends JFrame
 
     protected void choiceLayout()
     {
+        cardPanel.removeAll();
+        cardPanel.add(loginChoicePanel(), "choice");
         cardLayout.show(cardPanel, "choice");
+        cardPanel.revalidate();
+        cardPanel.repaint();
     }
-
     protected void loginLayout()
     {
         JPanel createPanel = userForum.existingAccount();

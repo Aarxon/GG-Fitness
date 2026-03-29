@@ -30,9 +30,13 @@ public class UserHome
         JLabel ggLabel = new JLabel("GG Fitness");
         JButton classesButton = new JButton("Book a Class");
 
+        JButton logoutButton = new JButton("Logout");
+
+
         buttonDesign(classesButton);
         buttonDesign(manageButton);
         buttonDesign(profileButton);
+        buttonDesign(logoutButton);
         nameLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 
 
@@ -44,12 +48,18 @@ public class UserHome
 
         mainPanel.add(topPanel, "dock north, growx, h 80!");
 
+        topPanel.add(logoutButton, "align left, h 60!");
         topPanel.add(nameLabel, "align right, wrap, h 60!");
 
         profileButton.addActionListener(e ->
         {
             mainWindow.showProfileInfo(user);
 
+        });
+
+        logoutButton.addActionListener(e ->
+        {
+            mainWindow.choiceLayout();
         });
 
         classesButton.addActionListener(e ->
@@ -67,6 +77,8 @@ public class UserHome
 
         return mainPanel;
     }
+
+
 
     private JButton buttonDesign(JButton button)
     {
