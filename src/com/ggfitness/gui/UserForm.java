@@ -10,11 +10,11 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
 
-public class UserForum
+public class UserForm
 {
     private final MainWindow mainWindow;
 
-    public UserForum(MainWindow mainWindow)
+    public UserForm(MainWindow mainWindow)
     {
         this.mainWindow = mainWindow;
     }

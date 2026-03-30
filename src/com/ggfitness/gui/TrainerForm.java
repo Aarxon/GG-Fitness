@@ -1,8 +1,5 @@
 package com.ggfitness.gui;
 
-import com.ggfitness.database.TrainerDBO;
-import com.ggfitness.database.UserDBO;
-import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -10,11 +7,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class TrainerFourm
+public class TrainerForm
 {
     private final MainWindow mainWindow;
 
-    public TrainerFourm(MainWindow mainWindow)
+    public TrainerForm(MainWindow mainWindow)
     {
         this.mainWindow = mainWindow;
     }

@@ -3,7 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.print.Book;
 
 import com.ggfitness.database.UserDBO;
 import com.ggfitness.model.User;
@@ -16,8 +15,8 @@ public class MainWindow extends JFrame
     private JPanel cardPanel;
     private CardLayout cardLayout;
     private User user;
-    UserForum userForum = new UserForum(this);
-    TrainerFourm trainerFourm = new TrainerFourm(this);
+    UserForm userForm = new UserForm(this);
+    TrainerForm trainerForm = new TrainerForm(this);
 
 
     public MainWindow()
@@ -86,7 +85,7 @@ public class MainWindow extends JFrame
         {
             public void mouseClicked(MouseEvent e)
             {
-                JPanel trainerPanel = trainerFourm.trainerLogin();
+                JPanel trainerPanel = trainerForm.trainerLogin();
                 cardPanel.add(trainerPanel, "trainerLogin");
                 cardLayout.show(cardPanel, "trainerLogin");
             }
@@ -108,7 +107,7 @@ public class MainWindow extends JFrame
         {
             public void mouseClicked(MouseEvent e)
             {
-                JPanel register = userForum.createAccount();
+                JPanel register = userForm.createAccount();
                 cardPanel.add(register, "createAccount");
                 cardLayout.show(cardPanel, "createAccount");
             }
@@ -202,8 +201,8 @@ public class MainWindow extends JFrame
 
     public void showClassesInfo(User user)
     {
-        BookClassesFourm bookClassesFourm = new BookClassesFourm(user, this);
-        JPanel classesInfoPanel = bookClassesFourm.classesWindow();
+        BookClassesForm bookClassesForm = new BookClassesForm(user, this);
+        JPanel classesInfoPanel = bookClassesForm.classesWindow();
 
         cardPanel.removeAll();
         cardPanel.add(classesInfoPanel, "classes");

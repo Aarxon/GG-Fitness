@@ -7,13 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class BookClassesFourm
+public class BookClassesForm
 {
     private User user;
     private MainWindow mainWindow;
 
 
-    public BookClassesFourm(User user, MainWindow mainWindow)
+    public BookClassesForm(User user, MainWindow mainWindow)
     {
         this.user = user;
         this.mainWindow = mainWindow;
@@ -87,33 +87,42 @@ public class BookClassesFourm
             trainerLabel.setForeground(new Color(120, 120, 120));
             trainerLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 
-            JButton bookBtn = new JButton("Book");
-            bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-            bookBtn.addActionListener(e ->
-            {
-                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to book this class?", "Book Class", JOptionPane.YES_NO_OPTION);
-                if(choice == JOptionPane.YES_OPTION)
-                {
-                    JOptionPane.showMessageDialog(null,"Class has been booked.");
-                    bookingDBO.addBooking(user.getUser_id(), s.getSchedule_id());
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null,"No booking has been made.");
-                }
-
-            });
-
-            bookBtn.setBackground(new Color(200, 255, 0));
-            bookBtn.setForeground(Color.BLACK);
-            bookBtn.setFocusPainted(false);
-            bookBtn.setBorderPainted(false);
+            JButton bookBtn = getJButton(s, bookingDBO);
 
             card.add(classLabel, "align center, wrap");
             card.add(timeLabel, "align center, wrap");
             card.add(trainerLabel, "align center, wrap");
             card.add(bookBtn, "growx, wrap 15");
         }
+    }
+
+    private JButton getJButton(Schedule s, BookingDBO bookingDBO) {
+        JButton bookBtn = new JButton("Book");
+        bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        bookBtn.addActionListener(e ->
+        {
+            if(bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id()))
+            {
+                JOptionPane.showMessageDialog(null, "You're already booked for this class!");
+            }
+            else
+            {
+                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to book this class?", "Book Class", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Class has been booked.");
+                    bookingDBO.addBooking(user.getUser_id(), s.getSchedule_id());
+                } else {
+                    JOptionPane.showMessageDialog(null, "No booking has been made.");
+                }
+            }
+
+        });
+
+        bookBtn.setBackground(new Color(200, 255, 0));
+        bookBtn.setForeground(Color.BLACK);
+        bookBtn.setFocusPainted(false);
+        bookBtn.setBorderPainted(false);
+        return bookBtn;
     }
 }
