@@ -34,6 +34,7 @@ public class MainWindow extends JFrame
         cardPanel = new JPanel(cardLayout);
         cardPanel.add(loginChoicePanel(), "choice");
         add(cardPanel);
+        setSize(1280, 720);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cardLayout.show(cardPanel, "choice");
@@ -43,20 +44,18 @@ public class MainWindow extends JFrame
 
     private JPanel loginChoicePanel()
     {
-        // Dark background
         JPanel outer = new JPanel(new MigLayout("fill, flowy, align center center"));
         outer.setBackground(new Color(13, 13, 13));
+
         //temp dev button
         JButton devBtn = new JButton("Admin Login");
         devBtn.setBackground(new Color(255, 0, 0));
 
-        // Center card
         JPanel card = new JPanel(new MigLayout("wrap, align center, insets 50 60 50 60, gap 15"));
         card.setBackground(new Color(22, 22, 22));
         card.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
         card.setMaximumSize(new Dimension(420, 700));
 
-        // Title
         JLabel title = new JLabel("GG-FITNESS");
         title.setFont(new Font("Impact", Font.PLAIN, 52));
         title.setForeground(new Color(200, 255, 0));
@@ -65,14 +64,12 @@ public class MainWindow extends JFrame
         subtitle.setFont(new Font("Arial", Font.PLAIN, 16));
         subtitle.setForeground(new Color(120, 120, 120));
 
-        // Fields
         JTextField emailField = new JTextField(20);
         emailField.putClientProperty("JTextField.placeholderText", "Username");
 
         JPasswordField passField = new JPasswordField(20);
         passField.putClientProperty("JTextField.placeholderText", "Password");
 
-        // Login button
         JButton loginBtn = new JButton("LOGIN");
         loginBtn.setBackground(new Color(200, 255, 0));
         loginBtn.setForeground(Color.BLACK);
@@ -80,7 +77,6 @@ public class MainWindow extends JFrame
         loginBtn.setFocusPainted(false);
         loginBtn.setBorderPainted(false);
 
-        // Trainer toggle link
         JLabel trainerToggle = new JLabel("Login as Trainer instead");
         trainerToggle.setForeground(new Color(120, 120, 120));
         trainerToggle.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -104,13 +100,12 @@ public class MainWindow extends JFrame
             }
         });
 
-        // Register button
         JLabel register = new JLabel("Create an account");
         register.setForeground(new Color(120, 120, 120));
         register.setFont(new Font("Arial", Font.PLAIN, 13));
         register.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        register.addMouseListener(new MouseAdapter() {
-
+        register.addMouseListener(new MouseAdapter()
+        {
             public void mouseClicked(MouseEvent e)
             {
                 JPanel register = userForum.createAccount();
@@ -145,24 +140,20 @@ public class MainWindow extends JFrame
 
             User currentUser = user.loginUser(email, password);
 
-
             if(currentUser != null)
             {
                 showUserHome(currentUser);
             }
         });
 
-        devBtn.addActionListener( e ->
+        devBtn.addActionListener(e ->
         {
             UserDBO user = new UserDBO();
-
             User currentUser = user.loginUser("admin@gmail.com", "admin");
             showUserHome(currentUser);
-
         });
 
         return outer;
-
     }
 
 
@@ -174,7 +165,6 @@ public class MainWindow extends JFrame
         cardPanel.revalidate();
         cardPanel.repaint();
         repaint();
-
     }
 
 
@@ -215,10 +205,11 @@ public class MainWindow extends JFrame
         BookClassesFourm bookClassesFourm = new BookClassesFourm(user, this);
         JPanel classesInfoPanel = bookClassesFourm.classesWindow();
 
-        cardPanel.add(classesInfoPanel, "classesWindow");
-        cardLayout.show(cardPanel, "classesWindow");
+        cardPanel.removeAll();
+        cardPanel.add(classesInfoPanel, "classes");
+        cardLayout.show(cardPanel, "classes");
+        cardPanel.revalidate();
+        cardPanel.repaint();
+        repaint();
     }
-
-
-
 }

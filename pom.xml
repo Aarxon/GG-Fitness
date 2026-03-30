@@ -41,5 +41,6 @@
             <artifactId>miglayout-swing</artifactId>
             <version>11.3</version>
         </dependency>
+
   </dependencies>
 </project>

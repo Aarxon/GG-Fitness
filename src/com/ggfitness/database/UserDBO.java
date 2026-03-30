@@ -8,6 +8,7 @@ import com.ggfitness.model.User;
 import org.apache.commons.validator.routines.EmailValidator;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import javax.swing.*;
+import java.time.LocalDate;
 
 public class UserDBO
 {
@@ -23,7 +24,7 @@ public class UserDBO
 
     }
 
-    public void createNewUser(String firstName, String lastName, String email, String password, String phoneNumber)
+    public void createNewUser(String firstName, String lastName, LocalDate dob, String email, String password, String phoneNumber)
     {
         int i;
         boolean isAddValid;
@@ -38,13 +39,14 @@ public class UserDBO
             try
             {
                 connection = dbcon.startConnection();
-                pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, email, password, phone_number) VALUES (?,?,?,?,?) ");
+                pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, date_of_birth, email, password, phone_number) VALUES (?,?,?, ?,?,?) ");
 
                 pstat.setString(1, firstName);
                 pstat.setString(2, lastName);
-                pstat.setString(3, email);
-                pstat.setString(4, passwordHash(password));
-                pstat.setString(5, phoneNumber);
+                pstat.setDate(3, java.sql.Date.valueOf(dob));
+                pstat.setString(4, email);
+                pstat.setString(5, passwordHash(password));
+                pstat.setString(6, phoneNumber);
 
                 i = pstat.executeUpdate();
                 JOptionPane.showMessageDialog(null, i + " Record created");
