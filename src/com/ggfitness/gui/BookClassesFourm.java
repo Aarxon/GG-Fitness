@@ -20,16 +20,13 @@ public class BookClassesFourm
 
     public JPanel classesWindow()
     {
-        JPanel mainPanel = new JPanel(new MigLayout());
+        JPanel outer = new JPanel(new MigLayout());
         JPanel classesPanel = new JPanel(new MigLayout());
 
         JButton homeButton = new JButton("Home");
 
 
-        buttonDesign(homeButton);
-
-        classesPanel.add(homeButton, "wrap");
-        mainPanel.add(classesPanel, "Push, align center");
+        outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
 
 
         homeButton.addActionListener( e ->
@@ -37,18 +34,7 @@ public class BookClassesFourm
             mainWindow.showUserHome(user);
 
         });
-        return mainPanel;
+        return outer;
     }
 
-    public JButton buttonDesign(JButton button)
-    {
-        button.setFont(new Font("Arial", Font.BOLD, 18));
-        button.setBackground(new Color(102, 126, 234));
-        button.setForeground(Color.BLACK);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(250, 100));
-
-        return button;
-    }
 }

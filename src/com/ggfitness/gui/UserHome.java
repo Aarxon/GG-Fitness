@@ -21,9 +21,6 @@ public class UserHome
 
     public JPanel homeScreen()
     {
-        JPanel navBar = new JPanel(new MigLayout("fill, insets 10"));
-        navBar.setBackground(new Color(22, 22, 22));
-
         JPanel outer = new JPanel(new MigLayout("fill, insets 0"));
         outer.setBackground(new Color(13, 13, 13));
 
@@ -39,15 +36,28 @@ public class UserHome
         classesLabel.setForeground(Color.WHITE);
         //Classes
 
-        //Memberships
-        JPanel membershipCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
-        membershipCard.setBackground(new Color(22, 22, 22));
-        membershipCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
-        membershipCard.setPreferredSize(new Dimension(280, 320));
 
-        JLabel membershipLabel = new JLabel("Membership");
-        membershipLabel.setFont(new Font("Impact", Font.PLAIN, 24));
-        membershipLabel.setForeground(Color.WHITE);
+        //Memberships
+        JPanel trainerCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
+        trainerCard.setBackground(new Color(22, 22, 22));
+        trainerCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        trainerCard.setPreferredSize(new Dimension(280, 320));
+
+        JLabel classesIcon = new JLabel("◉");
+        classesIcon.setFont(new Font("Arial", Font.PLAIN, 60));
+        classesIcon.setForeground(new Color(200, 255, 0));
+
+        JLabel trainerIcon = new JLabel("◉");
+        trainerIcon.setFont(new Font("Arial", Font.PLAIN, 60));
+        trainerIcon.setForeground(new Color(200, 255, 0));
+
+        JLabel newsIcon = new JLabel("◉");
+        newsIcon.setFont(new Font("Arial", Font.PLAIN, 60));
+        newsIcon.setForeground(new Color(200, 255, 0));
+
+        JLabel trainersLabel = new JLabel("Meet Our Trainers");
+        trainersLabel.setFont(new Font("Impact", Font.PLAIN, 24));
+        trainersLabel.setForeground(Color.WHITE);
         //Memberships
 
         //News
@@ -61,74 +71,19 @@ public class UserHome
         newsLabel.setForeground(Color.WHITE);
         //News
 
-        JLabel logoutLabel = new JLabel("Logout");
-        logoutLabel.setForeground(new Color(120, 120, 120));
-        logoutLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
-        JLabel nameLabel = new JLabel(user.getFirstName());
-        nameLabel.setFont(new Font("Impact", Font.PLAIN, 22));
-        nameLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
-        JLabel gglabel = new JLabel("GG-Fitness");
-        gglabel.setFont(new Font("Impact", Font.PLAIN, 30));
-        gglabel.setForeground(new Color(200, 255, 0));
-
-        JLabel avatar = new JLabel("●");
-        avatar.setFont(new Font("Arial", Font.PLAIN, 40));
-        avatar.setForeground(new Color(0, 0, 0));
-
-            logoutLabel.addMouseListener(new MouseAdapter()
-            {
-            public void mouseClicked(MouseEvent e)
-            {
-                mainWindow.choiceLayout();
-            }
-            public void mouseEntered(MouseEvent e)
-            {
-                logoutLabel.setForeground(new Color(200, 255, 0));
-            }
-            public void mouseExited(MouseEvent e)
-            {
-                logoutLabel.setForeground(new Color(120, 120, 120));
-            }
-        });
-
-            nameLabel.addMouseListener(new MouseAdapter()
-            {
-            public void mouseClicked(MouseEvent e)
-            {
-                mainWindow.showProfileInfo(user);
-            }
-            public void mouseEntered(MouseEvent e)
-            {
-                nameLabel.setForeground(new Color(200, 255, 0));
-            }
-            public void mouseExited(MouseEvent e)
-            {
-                nameLabel.setForeground(new Color(120, 120, 120));
-            }
-        });
-
-
-
-        //mig add section
-        outer.add(navBar, "dock north, growx, h 80!");
-        outer.add(membershipCard, "align right");
+        outer.add(trainerCard, "align right");
         outer.add(classesCard, "align center");
         outer.add(newsCard, "align left");
+        outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
 
+        classesCard.add(classesIcon, "align center, wrap");
         classesCard.add(classesLabel, "align center");
-        membershipCard.add(membershipLabel, "align center");
+        trainerCard.add(trainerIcon, "align center, wrap");
+        trainerCard.add(trainersLabel, "align center");
+        newsCard.add(newsIcon, "align center, wrap");
         newsCard.add(newsLabel, "align center");
 
-
-
-        navBar.add(logoutLabel, "w 200!, align left, h 40!");
-        navBar.add(gglabel, "pushx, align center");
-        navBar.add(nameLabel, "align right, h 40!");
-        navBar.add(avatar, "align right, h 45!");
 
 
         return outer;
