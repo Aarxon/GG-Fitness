@@ -30,6 +30,7 @@ bin/
 
 ### Config ###
 configProperties
+Query.sql
 .idea/
 *.iml
 /target/
