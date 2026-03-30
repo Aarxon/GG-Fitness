@@ -28,5 +28,10 @@
 
 ## 📸 Screenshots
 
+### Login Screen
 ![Login Screen](images/login.png)
+
+### Booking Menu
+![Booking Choice](images/bookingChoice.png)
+
 

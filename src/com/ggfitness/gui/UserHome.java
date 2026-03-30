@@ -27,6 +27,7 @@ public class UserHome
         JLabel classesLabel = new JLabel("Book a Class");
         classesLabel.setFont(new Font("Impact", Font.PLAIN, 24));
         classesLabel.setForeground(Color.WHITE);
+        classesLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JPanel trainerCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
         trainerCard.setBackground(new Color(22, 22, 22));

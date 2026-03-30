@@ -1,5 +1,6 @@
 package com.ggfitness.model;
 
+
 import java.time.LocalDate;
 
 public class Booking
@@ -13,5 +14,10 @@ public class Booking
         this.user_id = user_id;
         this.schedule_id = schedule_id;
         this.bookingDate = bookingDate;
+    }
+
+    public LocalDate getBookingDate()
+    {
+        return bookingDate;
     }
 }
