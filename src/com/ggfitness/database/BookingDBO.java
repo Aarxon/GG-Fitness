@@ -15,8 +15,6 @@ public class BookingDBO
     Connection connection = null;
     PreparedStatement pstat = null;
     ResultSet rs = null;
-    User user;
-    Schedule schedule;
 
     public void addBooking(int user_id, int schedule_id)
     {

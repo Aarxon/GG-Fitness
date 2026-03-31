@@ -65,11 +65,13 @@ public class UserForm
         numberField.putClientProperty("JTextField.placeholderText", "Mobile Number");
 
         JButton registerBtn = new JButton("Register");
+        registerBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         registerBtn.setBackground(new Color(200, 255, 0));
         registerBtn.setForeground(Color.BLACK);
         registerBtn.setFont(new Font("Arial", Font.BOLD, 15));
         registerBtn.setFocusPainted(false);
         registerBtn.setBorderPainted(false);
+        numberField.addActionListener(e -> registerBtn.doClick());
 
         card.add(title, "align center");
         card.add(subtitle, "align center, wrap 20");
@@ -103,10 +105,17 @@ public class UserForm
                     return;
                 }
 
-                String email = emailField.getText().trim();
+                String email = emailField.getText().trim().toLowerCase();
                 String password = new String(passField.getPassword());
                 String phoneNumber = numberField.getText();
                 user.createNewUser(firstName, lastName, dob, email, password, phoneNumber);
+                JOptionPane.showMessageDialog(null, "Account created! Please log in.");
+                mainWindow.choiceLayout();
+
+            }
+            catch (IllegalArgumentException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
             catch (Exception ex)
             {

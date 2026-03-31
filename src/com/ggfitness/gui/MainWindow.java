@@ -35,6 +35,8 @@ public class MainWindow extends JFrame
         add(cardPanel);
         setSize(1280, 720);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setTitle("GG-FITNESS");
+        setIconImage(new ImageIcon("images/gg.png").getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cardLayout.show(cardPanel, "choice");
         setVisible(true);
@@ -69,7 +71,11 @@ public class MainWindow extends JFrame
         JPasswordField passField = new JPasswordField(20);
         passField.putClientProperty("JTextField.placeholderText", "Password");
 
+
         JButton loginBtn = new JButton("LOGIN");
+        loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //Allows you to press enter instead of clicking the button
+        passField.addActionListener(e -> loginBtn.doClick());
         loginBtn.setBackground(new Color(200, 255, 0));
         loginBtn.setForeground(Color.BLACK);
         loginBtn.setFont(new Font("Arial", Font.BOLD, 15));
@@ -134,7 +140,7 @@ public class MainWindow extends JFrame
         loginBtn.addActionListener(e ->
         {
             UserDBO user = new UserDBO();
-            String email = emailField.getText().trim();
+            String email = emailField.getText().trim().toLowerCase();
             String password = passField.getText().trim();
 
             User currentUser = user.loginUser(email, password);
@@ -142,6 +148,11 @@ public class MainWindow extends JFrame
             if(currentUser != null)
             {
                 showUserHome(currentUser);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Invalid email or password.");
+                passField.setText("");
             }
         });
 
@@ -186,8 +197,12 @@ public class MainWindow extends JFrame
         ProfileInfo profileInfo = new ProfileInfo(user, this);
         JPanel profileInfoPanel = profileInfo.profileHome();
 
+        cardPanel.removeAll();
         cardPanel.add(profileInfoPanel, "profileHome");
         cardLayout.show(cardPanel, "profileHome");
+        cardPanel.revalidate();
+        cardPanel.repaint();
+        repaint();
     }
 
     public void showMembershipInfo(User user)
@@ -195,8 +210,12 @@ public class MainWindow extends JFrame
         MembershipInfo membershipInfo = new MembershipInfo(user, this);
         JPanel membershipInfoPanel = membershipInfo.membershipWindow();
 
+        cardPanel.removeAll();
         cardPanel.add(membershipInfoPanel, "membershipWindow");
         cardLayout.show(cardPanel, "membershipWindow");
+        cardPanel.revalidate();
+        cardPanel.repaint();
+        repaint();
     }
 
     public void showClassesInfo(User user)

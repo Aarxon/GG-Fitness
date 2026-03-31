@@ -26,13 +26,12 @@ public class UserDBO
 
     public void createNewUser(String firstName, String lastName, LocalDate dob, String email, String password, String phoneNumber)
     {
-        int i;
         boolean isAddValid;
 
         isAddValid = emailValidator.isValid(email);
         if (!isAddValid)
         {
-            JOptionPane.showMessageDialog(null, "Invalid Email Address");
+            throw new IllegalArgumentException("Invalid Email Address");
         }
         else
         {
@@ -48,8 +47,7 @@ public class UserDBO
                 pstat.setString(5, passwordHash(password));
                 pstat.setString(6, phoneNumber);
 
-                i = pstat.executeUpdate();
-                JOptionPane.showMessageDialog(null, i + " Record created");
+                pstat.executeUpdate();
             }
             catch (Exception e)
             {
@@ -96,12 +94,12 @@ public class UserDBO
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Invalid Password");
+                    return null;
                 }
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Invalid Email or Password");
+                return null;
             }
 
         }
@@ -119,7 +117,6 @@ public class UserDBO
     public void updateUser(String firstName, String lastName, String email, String phoneNumber, int user_id)
     {
         connection = dbcon.startConnection();
-        int i = 0;
 
         try {
 
@@ -128,7 +125,7 @@ public class UserDBO
             isAddValid = emailValidator.isValid(email);
             if (!isAddValid)
             {
-                JOptionPane.showMessageDialog(null, "Invalid Email Address");
+                throw new IllegalArgumentException("Invalid Email Address");
             }
             else
             {
@@ -141,7 +138,7 @@ public class UserDBO
                 pstat.setString(3, email);
                 pstat.setString(4, phoneNumber);
                 pstat.setInt(5, user_id);
-                i = pstat.executeUpdate();
+                pstat.executeUpdate();
             }
         }
         catch (SQLException e)

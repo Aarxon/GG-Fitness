@@ -99,20 +99,27 @@ public class BookClassesForm
     private JButton getJButton(Schedule s, BookingDBO bookingDBO) {
         JButton bookBtn = new JButton("Book");
         bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id());
 
         bookBtn.addActionListener(e ->
         {
             if(bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id()))
             {
                 JOptionPane.showMessageDialog(null, "You're already booked for this class!");
+                bookBtn.setText("Booked");
+                bookBtn.setEnabled(false);
             }
             else
             {
                 int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to book this class?", "Book Class", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
+                if (choice == JOptionPane.YES_OPTION)
+                {
                     JOptionPane.showMessageDialog(null, "Class has been booked.");
                     bookingDBO.addBooking(user.getUser_id(), s.getSchedule_id());
-                } else {
+                    bookBtn.setText("Booked");
+                    bookBtn.setEnabled(false);
+                } else
+                {
                     JOptionPane.showMessageDialog(null, "No booking has been made.");
                 }
             }
