@@ -21,15 +21,29 @@ public class ProfileInfo
 
     public JPanel profileHome()
     {
-        JPanel outer = new JPanel(new MigLayout("fill, insets 15, gap 15"));
+        JPanel outer = new JPanel(new MigLayout("fill, insets 15, gap 10"));
         outer.setBackground(new Color(13, 13, 13));
 
         JLabel avatar = new JLabel("●");
         avatar.setFont(new Font("Arial", Font.PLAIN, 200));
         avatar.setForeground(new Color(0, 0, 0));
 
+        JLabel profileLabel = new JLabel("Profile");
+        profileLabel.setFont(new Font("Impact", Font.BOLD, 24));
+
+        JLabel bookingsLabel = new JLabel("Manage Your Bookings");
+        bookingsLabel.setFont(new Font("Impact", Font.BOLD, 24));
+
+
         JLabel contactInfoLabel = new JLabel("Contact Info");
         JLabel personalDetailsLabel = new JLabel("Personal Details");
+        JLabel membershipLabel = new JLabel("Membership status:");
+
+        JLabel membershipActive = new JLabel("Active");
+        membershipActive.setForeground(new Color(200, 255, 0));
+
+        JLabel membershipInactive= new JLabel("Inactive");
+        membershipInactive.setForeground(new Color(255, 0, 0));
 
 
 
@@ -49,16 +63,33 @@ public class ProfileInfo
         profileCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
         profileCard.setPreferredSize(new Dimension(350, 800));
 
+        JPanel bookingsCard = new JPanel(new MigLayout("wrap, align center, insets 5 20, gap 10"));
+        bookingsCard.setBackground(new Color(22, 22, 22));
+        bookingsCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        bookingsCard.setPreferredSize(new Dimension(600, 800));
+
 
 
 
         outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
-        outer.add(profileCard, "align left");
+        outer.add(profileCard, "aligny top");
+        outer.add(bookingsCard, "aligny top, growx, pushx");
 
 
+
+        //Bookings
+        bookingsCard.add(bookingsLabel, "align center, wrap 30");
+
+        //Profile
+        profileCard.add(profileLabel, "align center, wrap 30");
 
         //Profile Picture
         profileCard.add(avatar, "pushx, align center, wrap");
+
+
+        //Membership Status
+        profileCard.add(membershipLabel, "align center, wrap");
+        profileCard.add(membershipActive, "align center, wrap 20");
 
         //Personal Details
         profileCard.add(personalDetailsLabel, "align center, wrap");
