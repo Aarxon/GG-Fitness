@@ -55,7 +55,7 @@ public class UserHome
         newsCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
         newsCard.setPreferredSize(new Dimension(280, 320));
 
-        JLabel newsLabel = new JLabel("News");
+        JLabel newsLabel = new JLabel("Manage Membership");
         newsLabel.setFont(new Font("Impact", Font.PLAIN, 24));
         newsLabel.setForeground(Color.WHITE);
 
@@ -71,7 +71,23 @@ public class UserHome
             }
             public void mouseExited(MouseEvent e)
             {
-                classesLabel.setForeground(new Color(120, 120, 120));
+                classesLabel.setForeground(new Color(255, 255, 255));
+            }
+        });
+
+        trainersLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                mainWindow.showMeetTrainers(user);
+            }
+            public void mouseEntered(MouseEvent e)
+            {
+                trainersLabel.setForeground(new Color(200, 255, 0));
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                trainersLabel.setForeground(new Color(255, 255, 255));
             }
         });
 

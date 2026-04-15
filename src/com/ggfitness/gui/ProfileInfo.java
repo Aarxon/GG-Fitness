@@ -1,6 +1,5 @@
 package com.ggfitness.gui;
 
-import com.ggfitness.database.UserDBO;
 import net.miginfocom.swing.MigLayout;
 import com.ggfitness.model.User;
 
@@ -78,10 +77,10 @@ public class ProfileInfo
 
 
         //Bookings
-        bookingsCard.add(bookingsLabel, "align center, wrap 30");
+        bookingsCard.add(bookingsLabel, "align center, wrap 20");
 
         //Profile
-        profileCard.add(profileLabel, "align center, wrap 30");
+        profileCard.add(profileLabel, "align center, wrap 20");
 
         //Profile Picture
         profileCard.add(avatar, "pushx, align center, wrap");

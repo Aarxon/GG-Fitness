@@ -230,4 +230,17 @@ public class MainWindow extends JFrame
         cardPanel.repaint();
         repaint();
     }
+
+    public void showMeetTrainers(User user)
+    {
+        MeetTrainers meetTrainers = new MeetTrainers(user, this);
+        JPanel meetTrainerPanel = meetTrainers.meetTheTrainers();
+
+        cardPanel.removeAll();
+        cardPanel.add(meetTrainerPanel, "meetTheTrainers");
+        cardLayout.show(cardPanel, "meetTheTrainers");
+        cardPanel.revalidate();
+        cardPanel.repaint();
+        repaint();
+    }
 }
