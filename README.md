@@ -34,4 +34,10 @@
 ### Booking Menu
 ![Booking Choice](images/bookingChoice.png)
 
+### Meet The Trainers
+![Booking Choice](images/trainers.png)
+
+### Memberships
+![Booking Choice](images/memberships.png)
+
 

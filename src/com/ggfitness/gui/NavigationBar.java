@@ -63,10 +63,10 @@ public class NavigationBar extends JPanel
             public void mouseExited(MouseEvent e)  { nameLabel.setForeground(new Color(120, 120, 120)); }
         });
 
-        add(logoutLabel, "w 200!, align left, h 40!");
+        add(logoutLabel, "w 130!, align left, h 40!");
         add(gglabel, "pushx, align center");
-        add(nameLabel, "align right, h 40!");
-        add(avatar, "align right, h 45!");
+        add(nameLabel, "w 80!, align right, h 40!");
+        add(avatar, "w 50!, align right, h 45!");
     }
 
 

@@ -18,6 +18,7 @@ public class ProfileInfo
 {
     private final User user;
     private final MainWindow mainWindow;
+    private JLabel bookingsLabel;
 
     public ProfileInfo(User user, MainWindow mainWindow)
     {
@@ -66,6 +67,14 @@ public class ProfileInfo
         numberField.setText(user.getPhone());
         numberField.setEditable(false);
 
+        JButton cancelEditBtn = new JButton("Cancel");
+        cancelEditBtn.setBackground(new Color(80, 80, 80));
+        cancelEditBtn.setForeground(Color.WHITE);
+        cancelEditBtn.setFocusPainted(false);
+        cancelEditBtn.setBorderPainted(false);
+        cancelEditBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cancelEditBtn.setVisible(false);
+
         JButton editBtn = new JButton("Edit");
         editBtn.setBackground(new Color(200, 255, 0));
         editBtn.setForeground(Color.BLACK);
@@ -81,12 +90,15 @@ public class ProfileInfo
         saveBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         saveBtn.setVisible(false);
 
+
+
         editBtn.addActionListener(e -> {
             nameField.setEditable(true);
             emailField.setEditable(true);
             numberField.setEditable(true);
             editBtn.setVisible(false);
             saveBtn.setVisible(true);
+            cancelEditBtn.setVisible(true);
         });
 
         saveBtn.addActionListener(e ->
@@ -105,10 +117,23 @@ public class ProfileInfo
                 numberField.setEditable(false);
                 editBtn.setVisible(true);
                 saveBtn.setVisible(false);
+                cancelEditBtn.setVisible(false);
             } catch (IllegalArgumentException ex)
             {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
+        });
+
+        cancelEditBtn.addActionListener(e -> {
+            nameField.setText(user.getFirstName() + " " + user.getlastName());
+            emailField.setText(user.getEmail());
+            numberField.setText(user.getPhone());
+            nameField.setEditable(false);
+            emailField.setEditable(false);
+            numberField.setEditable(false);
+            editBtn.setVisible(true);
+            saveBtn.setVisible(false);
+            cancelEditBtn.setVisible(false);
         });
 
 
@@ -131,7 +156,7 @@ public class ProfileInfo
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBackground(new Color(22, 22, 22));
         bookingsCard.add(bookingsLabel, "align center, wrap 20");
-        populateBookings(bookingsCard);
+        populateBookings(bookingsCard, bookingsLabel);
 
         outer.add(scrollPane, "aligny top, growx, pushx");
 
@@ -166,11 +191,12 @@ public class ProfileInfo
         //Buttons
         profileCard.add(editBtn, "align center, growx, wrap");
         profileCard.add(saveBtn, "align center, growx, wrap");
+        profileCard.add(cancelEditBtn, "align center, growx, wrap");
 
         return outer;
     }
 
-    private void populateBookings(JPanel card)
+    private void populateBookings(JPanel card, JLabel bookingsLabel)
     {
         BookingDBO bookingDBO = new BookingDBO();
         List<Booking> bookings = bookingDBO.getBookingsByUser(user.getUser_id());
@@ -188,16 +214,20 @@ public class ProfileInfo
             timeLabel.setForeground(new Color(120, 120, 120));
             timeLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 
-            JButton cancelBtn = getCancelButton(b, bookingDBO, card);
+            JButton cancelBtn = getCancelButton(b, bookingDBO, card, bookingsLabel);
 
             card.add(classLabel, "align center, wrap");
             card.add(dayLabel, "align center, wrap");
             card.add(timeLabel, "align center, wrap");
-            card.add(cancelBtn, "growx, wrap 15");
+            card.add(cancelBtn, "w 150!, align center, wrap 15");
+
+            JSeparator separator = new JSeparator();
+            separator.setForeground(new Color(50, 50, 50));
+            card.add(separator, "growx, wrap 10");
         }
     }
 
-    private JButton getCancelButton(Booking b, BookingDBO bookingDBO, JPanel card) {
+    private JButton getCancelButton(Booking b, BookingDBO bookingDBO, JPanel card, JLabel bookingsLabel) {
         JButton bookBtn = new JButton("Cancel");
         bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -211,6 +241,11 @@ public class ProfileInfo
                     System.out.println("Cancelling: user_id=" + user.getUser_id() + " schedule_id=" + b.getSchedule_id());
                     JOptionPane.showMessageDialog(null, "Class has been cancelled.");
                     bookingDBO.manageBooking(user.getUser_id(), b.getBooking_id());
+                    card.removeAll();
+                    card.add(bookingsLabel, "align center, wrap 20");
+                    populateBookings(card, bookingsLabel);
+                    card.revalidate();
+                    card.repaint();
                 } else
                 {
                     JOptionPane.showMessageDialog(null, "No changes have been made.");

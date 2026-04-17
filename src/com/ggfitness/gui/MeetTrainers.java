@@ -91,24 +91,24 @@ public class MeetTrainers
         specTag.setBackground(new Color(200, 255, 0));
         specTag.setOpaque(true);
         specTag.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
-        card.add(specTag, "align center, wrap 15");
+        card.add(specTag, "align center, wrap 25");
 
         // Education Section
         JLabel eduTitle = new JLabel("Education");
         eduTitle.setFont(new Font("Arial", Font.BOLD, 13));
         eduTitle.setForeground(new Color(200, 255, 0));
-        card.add(eduTitle, "align center, wrap 5");
+        card.add(eduTitle, "align center, wrap 10");
 
         JLabel eduLabel = new JLabel("<html><div style='width:280px;text-align:center'>" + education + "</div></html>");
         eduLabel.setForeground(new Color(160, 160, 160));
         eduLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        card.add(eduLabel, "align center, wrap 15");
+        card.add(eduLabel, "align center, wrap 25");
 
         // Specialisations bullet points
         JLabel specTitle = new JLabel("Specialisations");
         specTitle.setFont(new Font("Arial", Font.BOLD, 13));
         specTitle.setForeground(new Color(200, 255, 0));
-        card.add(specTitle, "align center, wrap 5");
+        card.add(specTitle, "align center, wrap 10");
 
         for (String s : specialties)
         {
