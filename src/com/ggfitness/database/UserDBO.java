@@ -129,7 +129,7 @@ public class UserDBO
             }
             else
             {
-                String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE user_id = ?";
+                String query = "UPDATE Users SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE user_id = ?";
 
                 pstat = connection.prepareStatement(query);
 

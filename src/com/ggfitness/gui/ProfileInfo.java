@@ -1,10 +1,17 @@
 package com.ggfitness.gui;
 
+import com.ggfitness.database.BookingDBO;
+import com.ggfitness.database.MembershipDBO;
+import com.ggfitness.model.Booking;
+import com.ggfitness.model.Schedule;
 import net.miginfocom.swing.MigLayout;
 import com.ggfitness.model.User;
+import com.ggfitness.database.UserDBO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+
 
 
 public class ProfileInfo
@@ -20,6 +27,8 @@ public class ProfileInfo
 
     public JPanel profileHome()
     {
+        MembershipDBO membershipDBO = new MembershipDBO();
+
         JPanel outer = new JPanel(new MigLayout("fill, insets 15, gap 10"));
         outer.setBackground(new Color(13, 13, 13));
 
@@ -33,7 +42,6 @@ public class ProfileInfo
         JLabel bookingsLabel = new JLabel("Manage Your Bookings");
         bookingsLabel.setFont(new Font("Impact", Font.BOLD, 24));
 
-
         JLabel contactInfoLabel = new JLabel("Contact Info");
         JLabel personalDetailsLabel = new JLabel("Personal Details");
         JLabel membershipLabel = new JLabel("Membership status:");
@@ -45,7 +53,6 @@ public class ProfileInfo
         membershipInactive.setForeground(new Color(255, 0, 0));
 
 
-
         JTextField nameField = new JTextField(20);
         nameField.setText(user.getFirstName() + " " + user.getlastName());
         nameField.setEditable(false);
@@ -53,8 +60,56 @@ public class ProfileInfo
 
         JTextField emailField = new JTextField(20);
         emailField.setText(user.getEmail());
+        emailField.setEditable(false);
+
         JTextField numberField = new JTextField(20);
         numberField.setText(user.getPhone());
+        numberField.setEditable(false);
+
+        JButton editBtn = new JButton("Edit");
+        editBtn.setBackground(new Color(200, 255, 0));
+        editBtn.setForeground(Color.BLACK);
+        editBtn.setFocusPainted(false);
+        editBtn.setBorderPainted(false);
+        editBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JButton saveBtn = new JButton("Save");
+        saveBtn.setBackground(new Color(200, 255, 0));
+        saveBtn.setForeground(Color.BLACK);
+        saveBtn.setFocusPainted(false);
+        saveBtn.setBorderPainted(false);
+        saveBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        saveBtn.setVisible(false);
+
+        editBtn.addActionListener(e -> {
+            nameField.setEditable(true);
+            emailField.setEditable(true);
+            numberField.setEditable(true);
+            editBtn.setVisible(false);
+            saveBtn.setVisible(true);
+        });
+
+        saveBtn.addActionListener(e ->
+        {
+            String[] nameParts = nameField.getText().split(" ");
+            String firstName = nameParts[0];
+            String lastName = nameParts[1];
+            UserDBO userDBO = new UserDBO();
+            try
+            {
+                System.out.println("Updating: " + firstName + " " + lastName + " " + emailField.getText() + " " + numberField.getText() + " " + user.getUser_id());
+                userDBO.updateUser(firstName, lastName, emailField.getText(), numberField.getText(), user.getUser_id());
+                JOptionPane.showMessageDialog(null, "Profile updated successfully!");
+                nameField.setEditable(false);
+                emailField.setEditable(false);
+                numberField.setEditable(false);
+                editBtn.setVisible(true);
+                saveBtn.setVisible(false);
+            } catch (IllegalArgumentException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        });
 
 
         JPanel profileCard = new JPanel(new MigLayout("wrap, align center, insets 5 20, gap 10"));
@@ -68,8 +123,6 @@ public class ProfileInfo
         bookingsCard.setPreferredSize(new Dimension(600, 800));
 
 
-
-
         outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
         outer.add(profileCard, "aligny top");
         outer.add(bookingsCard, "aligny top, growx, pushx");
@@ -78,6 +131,7 @@ public class ProfileInfo
 
         //Bookings
         bookingsCard.add(bookingsLabel, "align center, wrap 20");
+        populateBookings(bookingsCard);
 
         //Profile
         profileCard.add(profileLabel, "align center, wrap 20");
@@ -88,7 +142,15 @@ public class ProfileInfo
 
         //Membership Status
         profileCard.add(membershipLabel, "align center, wrap");
-        profileCard.add(membershipActive, "align center, wrap 20");
+
+        if(membershipDBO.checkMembership(user.getUser_id()) == true)
+        {
+            profileCard.add(membershipActive, "align center, wrap 20");
+        }
+        else
+        {
+            profileCard.add(membershipInactive, "align center, wrap 20");
+        }
 
         //Personal Details
         profileCard.add(personalDetailsLabel, "align center, wrap");
@@ -99,7 +161,65 @@ public class ProfileInfo
         profileCard.add(emailField, "align center, growy, wrap");
         profileCard.add(numberField, "align center, growy, wrap");
 
+        //Buttons
+        profileCard.add(editBtn, "align center, growx, wrap");
+        profileCard.add(saveBtn, "align center, growx, wrap");
+
         return outer;
+    }
+
+    private void populateBookings(JPanel card)
+    {
+        BookingDBO bookingDBO = new BookingDBO();
+        List<Booking> bookings = bookingDBO.getBookingsByUser(user.getUser_id());
+        for(Booking b : bookings)
+        {
+            JLabel classLabel = new JLabel(b.getClassName());
+            classLabel.setForeground(Color.WHITE);
+            classLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
+            JLabel dayLabel = new JLabel(b.getDay());
+            dayLabel.setForeground(new Color(120, 120, 120));
+            dayLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+
+            JLabel timeLabel = new JLabel(b.getStartTime() + " - " + b.getEndTime());
+            timeLabel.setForeground(new Color(120, 120, 120));
+            timeLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+
+            JButton cancelBtn = getCancelButton(b, bookingDBO, card);
+
+            card.add(classLabel, "align center, wrap");
+            card.add(dayLabel, "align center, wrap");
+            card.add(timeLabel, "align center, wrap");
+            card.add(cancelBtn, "growx, wrap 15");
+        }
+    }
+
+    private JButton getCancelButton(Booking b, BookingDBO bookingDBO, JPanel card) {
+        JButton bookBtn = new JButton("Cancel");
+        bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+
+        bookBtn.addActionListener(e ->
+        {
+
+                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this class?", "Cancel Class", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION)
+                {
+                    JOptionPane.showMessageDialog(null, "Class has been cancelled.");
+                    bookingDBO.manageBooking(user.getUser_id(), b.getBooking_id());
+                } else
+                {
+                    JOptionPane.showMessageDialog(null, "No changes have been made.");
+                }
+
+        });
+
+        bookBtn.setBackground(new Color(255, 0, 0));
+        bookBtn.setForeground(Color.BLACK);
+        bookBtn.setFocusPainted(false);
+        bookBtn.setBorderPainted(false);
+        return bookBtn;
     }
 
 

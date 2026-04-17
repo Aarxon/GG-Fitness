@@ -50,14 +50,14 @@ public class UserHome
         trainersLabel.setFont(new Font("Impact", Font.PLAIN, 24));
         trainersLabel.setForeground(Color.WHITE);
 
-        JPanel newsCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
-        newsCard.setBackground(new Color(22, 22, 22));
-        newsCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
-        newsCard.setPreferredSize(new Dimension(280, 320));
+        JPanel membershipCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
+        membershipCard.setBackground(new Color(22, 22, 22));
+        membershipCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
+        membershipCard.setPreferredSize(new Dimension(280, 320));
 
-        JLabel newsLabel = new JLabel("Manage Membership");
-        newsLabel.setFont(new Font("Impact", Font.PLAIN, 24));
-        newsLabel.setForeground(Color.WHITE);
+        JLabel membershipLabel = new JLabel("Manage Membership");
+        membershipLabel.setFont(new Font("Impact", Font.PLAIN, 24));
+        membershipLabel.setForeground(Color.WHITE);
 
         classesLabel.addMouseListener(new MouseAdapter()
         {
@@ -91,16 +91,36 @@ public class UserHome
             }
         });
 
+        membershipLabel.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent e)
+            {
+                mainWindow.showMembershipInfo(user);
+            }
+            public void mouseEntered(MouseEvent e)
+            {
+                membershipLabel.setForeground(new Color(200, 255, 0));
+            }
+            public void mouseExited(MouseEvent e)
+            {
+                membershipLabel.setForeground(new Color(255, 255, 255));
+            }
+        });
+
+
+
+
+
         outer.add(trainerCard, "align right");
         outer.add(classesCard, "align center");
-        outer.add(newsCard, "align left");
+        outer.add(membershipCard, "align left");
         outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
         classesCard.add(classesIcon, "align center, wrap");
         classesCard.add(classesLabel, "align center");
         trainerCard.add(trainerIcon, "align center, wrap");
         trainerCard.add(trainersLabel, "align center");
-        newsCard.add(newsIcon, "align center, wrap");
-        newsCard.add(newsLabel, "align center");
+        membershipCard.add(newsIcon, "align center, wrap");
+        membershipCard.add(membershipLabel, "align center");
         return outer;
     }
 }

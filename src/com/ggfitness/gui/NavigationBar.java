@@ -1,11 +1,15 @@
 package com.ggfitness.gui;
 
+import com.ggfitness.database.BookingDBO;
+import com.ggfitness.database.ScheduleDBO;
+import com.ggfitness.model.Schedule;
 import com.ggfitness.model.User;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class NavigationBar extends JPanel
 {
@@ -64,4 +68,6 @@ public class NavigationBar extends JPanel
         add(nameLabel, "align right, h 40!");
         add(avatar, "align right, h 45!");
     }
+
+
 }

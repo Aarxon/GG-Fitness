@@ -101,6 +101,12 @@ public class BookClassesForm
         bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id());
 
+        if(bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id()))
+        {
+            bookBtn.setText("Booked");
+            bookBtn.setEnabled(false);
+        }
+
         bookBtn.addActionListener(e ->
         {
             if(bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id()))
