@@ -59,8 +59,8 @@ public class BookingDBO
             while(rs.next())
             {
                 Booking booking = new Booking(
-                        rs.getInt("booking_id"),
                         rs.getInt("schedule_id"),
+                        rs.getInt("booking_id"),
                         rs.getString("name"),
                         rs.getString("day"),
                         rs.getString("start_time"),

@@ -120,18 +120,20 @@ public class ProfileInfo
         JPanel bookingsCard = new JPanel(new MigLayout("wrap, align center, insets 5 20, gap 10"));
         bookingsCard.setBackground(new Color(22, 22, 22));
         bookingsCard.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 50), 1));
-        bookingsCard.setPreferredSize(new Dimension(600, 800));
 
 
         outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
         outer.add(profileCard, "aligny top");
-        outer.add(bookingsCard, "aligny top, growx, pushx");
-
-
 
         //Bookings
+        JScrollPane scrollPane = new JScrollPane(bookingsCard);
+        scrollPane.setPreferredSize(new Dimension(600, 800));
+        scrollPane.setBorder(null);
+        scrollPane.getViewport().setBackground(new Color(22, 22, 22));
         bookingsCard.add(bookingsLabel, "align center, wrap 20");
         populateBookings(bookingsCard);
+
+        outer.add(scrollPane, "aligny top, growx, pushx");
 
         //Profile
         profileCard.add(profileLabel, "align center, wrap 20");
@@ -206,6 +208,7 @@ public class ProfileInfo
                 int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this class?", "Cancel Class", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION)
                 {
+                    System.out.println("Cancelling: user_id=" + user.getUser_id() + " schedule_id=" + b.getSchedule_id());
                     JOptionPane.showMessageDialog(null, "Class has been cancelled.");
                     bookingDBO.manageBooking(user.getUser_id(), b.getBooking_id());
                 } else
