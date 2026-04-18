@@ -52,6 +52,7 @@ public class TrainerForm
         loginBtn.setFont(new Font("Arial", Font.BOLD, 15));
         loginBtn.setFocusPainted(false);
         loginBtn.setBorderPainted(false);
+        loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Trainer toggle link
         JLabel userToggle = new JLabel("Login as user");
