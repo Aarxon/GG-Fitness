@@ -1,6 +1,6 @@
 # 🏋️ GG Fitness
 
-![Login Screen](images/gg.png)
+![Login Screen](src/resources/images/gg.png)
 
 **GG Fitness** is a simple **Java desktop application** that helps manage gym operations — from memberships to class scheduling and trainer management.
 

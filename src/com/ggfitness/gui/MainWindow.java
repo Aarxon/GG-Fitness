@@ -36,7 +36,7 @@ public class MainWindow extends JFrame
         setSize(1280, 720);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("GG-FITNESS");
-        setIconImage(new ImageIcon("images/gg.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/images/gg.png")).getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cardLayout.show(cardPanel, "choice");
         setVisible(true);
