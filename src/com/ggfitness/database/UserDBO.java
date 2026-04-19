@@ -38,16 +38,31 @@ public class UserDBO
             try
             {
                 connection = dbcon.startConnection();
-                pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, date_of_birth, email, password, phone_number) VALUES (?,?,?, ?,?,?) ");
 
-                pstat.setString(1, firstName);
-                pstat.setString(2, lastName);
-                pstat.setDate(3, java.sql.Date.valueOf(dob));
-                pstat.setString(4, email);
-                pstat.setString(5, passwordHash(password));
-                pstat.setString(6, phoneNumber);
+                pstat = connection.prepareStatement("SELECT user_id FROM Users WHERE email = ?");
+                pstat.setString(1, email);
+                resultSet = pstat.executeQuery();
+                if (resultSet.next())
+                {
+                    throw new IllegalArgumentException("An account with this email already exists");
+                }
+                else
+                {
+                    pstat = connection.prepareStatement("INSERT INTO Users (first_name, last_name, date_of_birth, email, password, phone_number) VALUES (?,?,?, ?,?,?) ");
 
-                pstat.executeUpdate();
+                    pstat.setString(1, firstName);
+                    pstat.setString(2, lastName);
+                    pstat.setDate(3, java.sql.Date.valueOf(dob));
+                    pstat.setString(4, email);
+                    pstat.setString(5, passwordHash(password));
+                    pstat.setString(6, phoneNumber);
+
+                    pstat.executeUpdate();
+                }
+            }
+            catch(IllegalArgumentException e)
+            {
+                throw e;
             }
             catch (Exception e)
             {
@@ -79,6 +94,7 @@ public class UserDBO
             {
                 String passwordHash = resultSet.getString("password");
 
+                // Both wrong password and no account return null
                 if(verifyPassword(password, passwordHash))
                 {
                     User user = new User

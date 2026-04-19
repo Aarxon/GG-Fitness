@@ -81,6 +81,7 @@ public class BookingDBO
         return bookings;
     }
 
+    // Cancels a booking by deleting the record
     public void manageBooking(int user_id, int schedule_id)
     {
         try

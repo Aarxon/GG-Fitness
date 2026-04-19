@@ -49,6 +49,7 @@ public class UserHome
         JLabel trainersLabel = new JLabel("Meet Our Trainers");
         trainersLabel.setFont(new Font("Impact", Font.PLAIN, 24));
         trainersLabel.setForeground(Color.WHITE);
+        trainersLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JPanel membershipCard = new JPanel(new MigLayout("wrap, align center, insets 20, gap 10"));
         membershipCard.setBackground(new Color(22, 22, 22));
@@ -58,6 +59,7 @@ public class UserHome
         JLabel membershipLabel = new JLabel("Manage Membership");
         membershipLabel.setFont(new Font("Impact", Font.PLAIN, 24));
         membershipLabel.setForeground(Color.WHITE);
+        membershipLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         classesLabel.addMouseListener(new MouseAdapter()
         {
@@ -114,7 +116,10 @@ public class UserHome
         outer.add(trainerCard, "align right");
         outer.add(classesCard, "align center");
         outer.add(membershipCard, "align left");
+        // Docked north so it always sits at the top regardless of add order
         outer.add(new NavigationBar(user, mainWindow), "dock north, growx, h 80!");
+
+        // Populate card contents after adding them to outer
         classesCard.add(classesIcon, "align center, wrap");
         classesCard.add(classesLabel, "align center");
         trainerCard.add(trainerIcon, "align center, wrap");

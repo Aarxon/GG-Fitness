@@ -20,6 +20,7 @@ public class MeetTrainers
 
     public JPanel meetTheTrainers()
     {
+        // All arrays are indexed together — keep them in the same order
         String[] trainers = {"Sarah", "Emma", "James"};
         String[] educations =
                 {

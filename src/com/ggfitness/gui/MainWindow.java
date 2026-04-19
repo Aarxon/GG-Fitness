@@ -66,7 +66,7 @@ public class MainWindow extends JFrame
         subtitle.setForeground(new Color(120, 120, 120));
 
         JTextField emailField = new JTextField(20);
-        emailField.putClientProperty("JTextField.placeholderText", "Username");
+        emailField.putClientProperty("JTextField.placeholderText", "Email");
 
         JPasswordField passField = new JPasswordField(20);
         passField.putClientProperty("JTextField.placeholderText", "Password");
@@ -135,7 +135,6 @@ public class MainWindow extends JFrame
         card.add(trainerToggle, "align center");
         card.add(register, "align center");
         outer.add(card, "push, align center center");
-        outer.add(devBtn, "align center");
 
         loginBtn.addActionListener(e ->
         {
@@ -156,12 +155,6 @@ public class MainWindow extends JFrame
             }
         });
 
-        devBtn.addActionListener(e ->
-        {
-            UserDBO user = new UserDBO();
-            User currentUser = user.loginUser("admin@gmail.com", "admin");
-            showUserHome(currentUser);
-        });
 
         return outer;
     }
@@ -183,6 +176,7 @@ public class MainWindow extends JFrame
         UserHome userHome = new UserHome(user, this);
         JPanel userHomePanel = userHome.homeScreen();
 
+        // removeAll() clears the previous panel before switching — all show* methods follow this pattern
         cardPanel.removeAll();
         cardPanel.add(userHomePanel, "userHome");
         cardLayout.show(cardPanel, "userHome");

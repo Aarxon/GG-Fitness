@@ -241,6 +241,7 @@ public class ProfileInfo
                     System.out.println("Cancelling: user_id=" + user.getUser_id() + " schedule_id=" + b.getSchedule_id());
                     JOptionPane.showMessageDialog(null, "Class has been cancelled.");
                     bookingDBO.manageBooking(user.getUser_id(), b.getBooking_id());
+                    // Clear and repopulate the card to reflect the cancelled booking
                     card.removeAll();
                     card.add(bookingsLabel, "align center, wrap 20");
                     populateBookings(card, bookingsLabel);

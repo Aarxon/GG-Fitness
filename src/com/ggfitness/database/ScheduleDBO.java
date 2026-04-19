@@ -25,6 +25,7 @@ public class ScheduleDBO
         try
         {
             connection = dbcon.startConnection();
+            // Joins Schedule with Trainers and Classes to get full session details in one query
             pstat = connection.prepareStatement("SELECT s.schedule_id, s.day, s.start_time, s.end_time, \n" +
                                                    "t.first_name, t.last_name, c.name as class_name\n" +
                                                    "FROM Schedule s\n" +

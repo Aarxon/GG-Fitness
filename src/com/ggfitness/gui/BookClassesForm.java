@@ -101,6 +101,7 @@ public class BookClassesForm
         bookBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id());
 
+        // Set initial button state on load — disables it if already booked
         if(bookingDBO.isAlreadyBooked(user.getUser_id(), s.getSchedule_id()))
         {
             bookBtn.setText("Booked");

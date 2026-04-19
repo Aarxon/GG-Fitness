@@ -92,6 +92,16 @@ public class UserForm
                 UserDBO user = new UserDBO();
                 String firstName = firstNameField.getText();
                 String lastName = lastNameField.getText();
+                if (firstName.isEmpty() || lastName.isEmpty() || dobField.getText().trim().isEmpty() ||
+                        emailField.getText().trim().isEmpty() || new String(passField.getPassword()).isEmpty() ||
+                        numberField.getText().trim().isEmpty())
+                {
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields");
+                    return;
+                }
+
+
+                // Input is DD/MM/YYYY so parts[0]=day, parts[1]=month, parts[2]=year
                 String[] parts = dobField.getText().split("/");
                 LocalDate dob = LocalDate.of(
                         Integer.parseInt(parts[2]),
@@ -99,6 +109,7 @@ public class UserForm
                         Integer.parseInt(parts[0])
                 );
 
+                // True if dob is after today-18yrs, meaning user is under 18
                 if (LocalDate.now().minusYears(18).isBefore(dob))
                 {
                     JOptionPane.showMessageDialog(null, "You must be 18 or older to register");
