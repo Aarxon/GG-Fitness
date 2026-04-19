@@ -42,4 +42,7 @@
 ### Memberships
 ![Booking Choice](images/memberships.png)
 
+### Profile
+![Porfile](images/profile.png)
+
 
