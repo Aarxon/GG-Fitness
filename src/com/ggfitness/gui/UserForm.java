@@ -122,6 +122,11 @@ public class UserForm
                 String email = emailField.getText().trim().toLowerCase();
                 String password = new String(passField.getPassword());
                 String phoneNumber = numberField.getText();
+                if (!phoneNumber.matches("[0-9]+"))
+                {
+                    JOptionPane.showMessageDialog(null, "Phone number can only contain digits");
+                    return;
+                }
                 user.createNewUser(firstName, lastName, dob, email, password, phoneNumber);
                 JOptionPane.showMessageDialog(null, "Account created! Please log in.");
                 mainWindow.choiceLayout();
