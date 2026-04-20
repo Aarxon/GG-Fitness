@@ -99,8 +99,11 @@ public class UserForm
                     JOptionPane.showMessageDialog(null, "Please fill in all fields");
                     return;
                 }
-
-
+                if (!firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+"))
+                {
+                    JOptionPane.showMessageDialog(null, "Name can only contain letters");
+                    return;
+                }
                 // Input is DD/MM/YYYY so parts[0]=day, parts[1]=month, parts[2]=year
                 String[] parts = dobField.getText().split("/");
                 LocalDate dob = LocalDate.of(
